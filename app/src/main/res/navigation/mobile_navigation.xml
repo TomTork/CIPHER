@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_text">
+
+    <fragment
+        android:id="@+id/nav_text"
+        android:name="com.anotherworld.encryption.ui.text.TextFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_text" >
+        <action
+            android:id="@+id/action_nav_text_to_nav_image2"
+            app:destination="@id/nav_image" />
+        <action
+            android:id="@+id/action_nav_text_to_nav_video"
+            app:destination="@id/nav_video" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_image"
+        android:name="com.anotherworld.encryption.ui.image.ImageFragment"
+        android:label="@string/image"
+        tools:layout="@layout/fragment_image" >
+        <action
+            android:id="@+id/action_nav_image_to_nav_text"
+            app:destination="@id/nav_text" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_video"
+        android:name="com.anotherworld.encryption.ui.password.PasswordFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_password" >
+        <action
+            android:id="@+id/action_nav_video_to_nav_text2"
+            app:destination="@id/nav_text" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_scale"
+        android:name="com.anotherworld.encryption.ui.scale.ScaleFragment"
+        android:label="@string/menu_scale"
+        tools:layout="@layout/fragment_scale" >
+        <action
+            android:id="@+id/action_nav_scale_to_nav_text"
+            app:destination="@id/nav_text" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.anotherworld.encryption.ui.chat.ChatFragment"
+        android:label="@string/menu_chat"
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_nav_chat_to_nav_text"
+            app:destination="@id/nav_text" />
+    </fragment>
+</navigation>

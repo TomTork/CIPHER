@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/fragment_image_container"
+    tools:context=".ui.image.ImageViewModel">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.0"
+            android:id="@+id/fullscreen"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/preview"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:weightSum="2.5"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2.5"
+            android:hint="@string/will"
+            android:layout_height="wrap_content"
+            android:id="@+id/decode"
+            android:maxLines="100"
+            android:ellipsize="end"
+            android:singleLine="true"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/copy_decode"
+            android:src="@drawable/copy_24"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3.5"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/code"
+            android:hint="@string/code"
+            android:layout_weight="3"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/random"
+            android:src="@drawable/random_24"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:id="@+id/copy_code"
+            android:src="@drawable/copy_24"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:weightSum="3.5"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:id="@+id/load"
+            android:src="@drawable/load_24"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/save_24"
+            android:id="@+id/save"
+            android:layout_weight="0.5" />
+    </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

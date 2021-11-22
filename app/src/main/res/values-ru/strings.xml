@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cipher</string>
+    <string name="encrypt">Зашифровать</string>
+    <string name="decrypt">Расшифровать</string>
+    <string name="execute">Выполнить</string>
+    <string-array name="choice_encrypt">
+        <item>Шифрование изображений</item>
+        <item>Шифрование текста</item>
+        <item>Шифрование видео</item>
+        <item>Система счисления</item>
+        <item>Секретный чат</item>
+    </string-array>
+    <string-array name="choice_type_cipher">
+        <item>AES/CBC/PKCS5Padding</item>
+        <item>AES/GCM/NoPadding</item>
+        <item>Вынос ключа</item>
+    </string-array>
+    <string-array name="choice_type_image">
+        <item>AES/CBC/PKCS5Padding</item>
+        <item>AES/GCM/NoPadding</item>
+    </string-array>
+    <string name="type">Тип</string>
+    <string name="code">Код</string>
+    <string name="code_room">Код комнаты</string>
+    <string name="enter">Введите текст</string>
+    <string name="output">Выходные данные</string>
+    <string name="input">Ввод</string>
+    <string name="translate">Перевести</string>
+
+    <string name="action_settings">Настройки</string>
+
+    <string name="menu_home">Текст</string>
+    <string name="menu_gallery">Галлерея</string>
+    <string name="menu_slideshow">Пароли</string>
+    <string name="menu_scale">Системы счисления</string>
+    <string name="menu_chat">Чат</string>
+    <string name="name">Имя</string>
+    <string name="cipher">Шифр</string>
+    <string name="task">Задача выполнена</string>
+    <string name="click">Нажмите, чтобы посмотреть</string>
+    <string name="image">Изображения</string>
+    <string name="inprogress">Успешно! Это может занять некоторое время. Мы уведомим вас по завершении!</string>
+    <string name="copied">Скопировано!</string>
+    <string name="ops">Упс! Что-то пошло не так!</string>
+    <string name="will">Здесь будет зашифрованный текст</string>
+    <string name="long_txt">Текст слишком большой, нажмите кнопку сохранить для создания файла с контентом внутри</string>
+    <string name="secret">*секретное содержание*</string>
+    <string name="success">Успешно!</string>
+    <string name="invalid">Недопустимый или неподдерживаемый формат</string>
+    <string name="check">Проверьте целостность ввода</string>
+    <string name="from">из</string>
+    <string name="to">в</string>
+    <string name="error">При дешифровке произошла ошибка</string>
+    <string name="defaultType">Шифрование по умолчанию</string>
+    <string name="defaultKey">Ключ по умолчанию</string>
+    <string name="store">Хранить ключ внутри файла</string>
+    <string name="first">Первая величина по умолчанию</string>
+    <string name="second">Вторая величина по умолчанию</string>
+    <string name="defaultRoom">Название комнаты по умолчанию</string>
+    <string name="defaultName">Имя по умолчанию</string>
+    <string name="defaultCode">Код по умолчанию</string>
+    <string name="bug">Нашли баг? sup.alone.port@gmail.com</string>
+</resources>

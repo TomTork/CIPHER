@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "959357804009",
+    "firebase_url": "https://cipher-93bd1-default-rtdb.firebaseio.com",
+    "project_id": "cipher-93bd1",
+    "storage_bucket": "cipher-93bd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959357804009:android:e20141562d907d23863f78",
+        "android_client_info": {
+          "package_name": "com.anotherworld.encryption"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959357804009-iqujtv0g17m7sclq6553ub1m2qj7nab3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anotherworld.encryption",
+            "certificate_hash": "6501253e0a077b83d59b535d089e128e9a212681"
+          }
+        },
+        {
+          "client_id": "959357804009-vah8tgh8qeglubljf5usfcq4085mquhg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9Tvl2yFbisSRKaLXnOFcUPC9buoS-URY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959357804009-vah8tgh8qeglubljf5usfcq4085mquhg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
