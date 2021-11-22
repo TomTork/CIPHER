@@ -14,8 +14,8 @@
             android:id="@+id/action_nav_text_to_nav_image2"
             app:destination="@id/nav_image" />
         <action
-            android:id="@+id/action_nav_text_to_nav_video"
-            app:destination="@id/nav_video" />
+            android:id="@+id/action_nav_text_to_nav_password"
+            app:destination="@id/nav_password" />
     </fragment>
 
     <fragment
@@ -29,12 +29,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_video"
+        android:id="@+id/nav_password"
         android:name="com.anotherworld.encryption.ui.password.PasswordFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_password" >
         <action
-            android:id="@+id/action_nav_video_to_nav_text2"
+            android:id="@+id/action_nav_password_to_nav_text2"
             app:destination="@id/nav_text" />
     </fragment>
 

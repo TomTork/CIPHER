@@ -15,7 +15,6 @@ class Data {
 
     private val key_text = File(d("keytext"))
     private val key_image = File(d("keyimage"))
-    private val key_video = File(d("keyvideo"))
     private val first = File(d("first"))
     private val second = File(d("second"))
     private val room = File(d("room"))
@@ -23,19 +22,19 @@ class Data {
     private val code = File(d("code"))
     private val type_text = File(d("typetext"))
     private val type_image = File(d("typeimage"))
-    private val type_video = File(d("typevideo"))
     private val sw_image = File(d("swimage"))
-    private val sw_video = File(d("swvideo"))
+    private val len_password = File(d("len"))
+    private val number = File(d("number"))
     init {
         try{
-            if (!height.exists() || !key_text.exists()){
+            if (!height.exists() || !key_text.exists() || !len_password.exists() || !number.exists()){
                 width.createNewFile()
                 height.createNewFile()
                 value.createNewFile()
+                number.createNewFile()
 
                 key_text.createNewFile()
                 key_image.createNewFile()
-                key_video.createNewFile()
                 first.createNewFile()
                 second.createNewFile()
                 room.createNewFile()
@@ -43,15 +42,14 @@ class Data {
                 code.createNewFile()
                 type_text.createNewFile()
                 type_image.createNewFile()
-                type_video.createNewFile()
                 sw_image.createNewFile()
-                sw_video.createNewFile()
+                len_password.createNewFile()
 
+                setNumber(10)
+                setLength(16)
                 setTypeText(0)
                 setTypeImage(0)
-                setTypeVideo(0)
                 setSWImage(0)
-                setSWVideo(0)
 
                 setHeight(0)
                 setWidth(0)
@@ -60,10 +58,10 @@ class Data {
             width.createNewFile()
             value.createNewFile()
             height.createNewFile()
+            number.createNewFile()
 
             key_text.createNewFile()
             key_image.createNewFile()
-            key_video.createNewFile()
             first.createNewFile()
             second.createNewFile()
             room.createNewFile()
@@ -71,37 +69,36 @@ class Data {
             code.createNewFile()
             type_text.createNewFile()
             type_image.createNewFile()
-            type_video.createNewFile()
             sw_image.createNewFile()
-            sw_video.createNewFile()
+            len_password.createNewFile()
 
+            setNumber(10)
+            setLength(16)
             setTypeText(0)
             setTypeImage(0)
-            setTypeVideo(0)
             setSWImage(0)
-            setSWVideo(0)
 
             setHeight(0)
             setWidth(0)
         }
     }
-    fun getSWVideo(): Int{
-        return FileInputStream(sw_video).bufferedReader().use { it.readText() }.toString().toInt()
+    fun setNumber(value: Int){
+        number.writeText(value.toString())
     }
-    fun setSWVideo(value: Int){
-        sw_video.writeText(value.toString())
+    fun getNumber(): Int{
+        return FileInputStream(number).bufferedReader().use { it.readText() }.toString().toInt()
+    }
+    fun getLength(): Int{
+        return FileInputStream(len_password).bufferedReader().use { it.readText() }.toString().toInt()
+    }
+    fun setLength(value: Int){
+        len_password.writeText(value.toString())
     }
     fun setSWImage(value: Int){
         sw_image.writeText(value.toString())
     }
     fun getSWImage(): Int{
         return FileInputStream(sw_image).bufferedReader().use { it.readText() }.toString().toInt()
-    }
-    fun getTypeVideo(): Int{
-        return FileInputStream(type_video).bufferedReader().use { it.readText() }.toString().toInt()
-    }
-    fun setTypeVideo(value: Int){
-        type_video.writeText(value.toString())
     }
     fun getTypeImage(): Int{
         return FileInputStream(type_image).bufferedReader().use { it.readText() }.toString().toInt()
@@ -144,12 +141,6 @@ class Data {
     }
     fun getFirst(): String{
         return FileInputStream(first).bufferedReader().use { it.readText() }.toString()
-    }
-    fun getKeyVideo(): String{
-        return FileInputStream(key_video).bufferedReader().use { it.readText() }.toString()
-    }
-    fun setKeyVideo(value: String){
-        key_video.writeText(value)
     }
     fun getKeyImage(): String{
         return FileInputStream(key_image).bufferedReader().use { it.readText() }.toString()
