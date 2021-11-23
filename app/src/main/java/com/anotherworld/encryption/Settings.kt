@@ -45,11 +45,7 @@ class Settings : AppCompatActivity() {
         if(input_length.text.toString().isEmpty()){
             data.setLength(16)
         }
-        else if(input_length.text.toString().toInt() in 1..32)data.setLength(input_length.text.toString().toInt())
-        else{
-            Toast.makeText(this, R.string.max, Toast.LENGTH_SHORT).show()
-            data.setLength(32)
-        }
+        else { data.setLength(input_length.text.toString().toInt()) }
         if(input_number.text.toString().isEmpty()){
             data.setNumber(10)
         }

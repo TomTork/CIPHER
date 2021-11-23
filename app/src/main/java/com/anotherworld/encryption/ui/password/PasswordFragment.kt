@@ -19,6 +19,7 @@ import com.anotherworld.encryption.R
 import com.anotherworld.encryption.databinding.FragmentPasswordBinding
 
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 
 class PasswordFragment : Fragment() {
@@ -26,6 +27,7 @@ class PasswordFragment : Fragment() {
     private lateinit var slideshowViewModel: PasswordViewModel
     private var _binding: FragmentPasswordBinding? = null
     private lateinit var sp: RecyclerView
+    private lateinit var update: ImageButton
     private val data: Data = Data()
 
     private val binding get() = _binding!!
@@ -35,8 +37,11 @@ class PasswordFragment : Fragment() {
         _binding = FragmentPasswordBinding.inflate(inflater, container, false)
         val root: View = binding.root
         sp = root.findViewById(R.id.sp)
+        update = root.findViewById(R.id.update)
         sp.layoutManager = LinearLayoutManager(requireContext())
-        sp.adapter = CustomRecyclerAdapter(fillList(data.getNumber(), data.getLength()))
+        sp.adapter = CustomRecyclerAdapter(convertToRandom(data.getNumber(), data.getLength()))
+        update.setOnClickListener { sp.adapter = CustomRecyclerAdapter(convertToRandom(data.getNumber(), data.getLength())) }
+
         return root
     }
 
@@ -45,16 +50,26 @@ class PasswordFragment : Fragment() {
         _binding = null
     }
 
-    private fun fillList(number: Int = 10, len: Int = 16): List<String> {
+    private fun convertToRandom(number: Int, len: Int): List<String>{
         val data = mutableListOf<String>()
-        (0 until number).forEach { i ->
-            run {
-                if(len <= 16) data.add(Math.random().toString().replace(".", (Math.random() * 10).toInt().toString()).substring(0, len))
-                else{
-                    val s = Math.random().toString().replace(".", (Math.random() * 10).toInt().toString()).substring(0, 16) + Math.random().toString().replace(".", (Math.random() * 10).toInt().toString()).substring(0, 16)
-                    data.add(s.substring(0, len))
+        var reload = ""
+        val random = Random()
+        for(t in 0 until number){
+            for(i in 0 until len){
+                reload += when{
+                    (Math.random() * 10).toInt() % 2 == 0 -> {
+                        IntArray(1) { random.nextInt(90 - 65) + 65 }.asList().map { it.toChar() }.toString().filterNot { "[]".indexOf(it) > -1 }
+                    }
+                    (Math.random() * 10).toInt() % 3 == 0 -> {
+                        IntArray(1) { random.nextInt(57 - 48) + 48 }.asList().map { it.toChar() }.toString().filterNot { "[]".indexOf(it) > -1 }
+                    }
+                    else -> {
+                        IntArray(1) { random.nextInt(122 - 97) + 97 }.asList().map { it.toChar() }.toString().filterNot { "[]".indexOf(it) > -1 }
+                    }
                 }
             }
+            data.add(reload)
+            reload = ""
         }
         return data
     }
