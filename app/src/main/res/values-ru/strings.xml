@@ -64,4 +64,5 @@
     <string name="length">Длина пароля</string>
     <string name="number">Количество строк</string>
     <string name="max">Максимальная длина 32. Установлено 32</string>
+    <string name="check2">Ошибка! Вероятно файл с таким именем (ключ) уже существует</string>
 </resources>

@@ -22,13 +22,11 @@ import androidx.lifecycle.lifecycleScope
 import com.anotherworld.encryption.databinding.FragmentImageBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileInputStream
 import androidx.core.graphics.drawable.toBitmap
 import com.anotherworld.encryption.*
 import okio.ByteString.Companion.toByteString
-import java.io.FileOutputStream
+import java.io.*
+import java.net.URI
 import java.util.*
 import kotlin.math.absoluteValue
 
@@ -101,16 +99,20 @@ class ImageFragment : Fragment() {
                                 Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
                             }
                         }
-                        data!!.data!!.lastPathSegment.toString().contains("document") -> {
+                        data!!.data!!.lastPathSegment.toString().contains("document") || data!!.data!!.lastPathSegment.toString().contains(".txt") -> {
                             try{
                                 val name: String = data?.data!!.lastPathSegment.toString().substringAfterLast("/").substringBeforeLast(".").substringBefore("-CIPHER")
-                                val content = FileInputStream(File("storage/self/" + data.data!!.path.toString().replaceFirst("/", "").substringAfter("/").replaceFirst(":", "/"))).bufferedReader().use { it.readText() }.toString()
-                                preview.setImageBitmap(cour(name, content))
+                                Log.d("QQQQQ-r1", name)
+                                Log.d("QQQQQ-r32", "storage/self/" + data.data!!.path.toString().replaceFirst("/", "").substringAfter("/").replaceFirst(":", "/").replaceFirst("raw/", "raw"))
+                                val content12 = FileInputStream(File("storage/self/primary/Download/" + data.data!!.path.toString().substringAfter("Download/"))).bufferedReader().use{ it.readText() }.toString()
+
+                                preview.setImageBitmap(cour(name, content12))
                             }catch (e: Exception){
-                                Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
                             }
                         }
                         else -> {
+                            Log.d("QQQQQ-what", data!!.data!!.lastPathSegment.toString())
                             Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -216,7 +218,7 @@ class ImageFragment : Fragment() {
                     Snackbar.make(it, R.string.success, Snackbar.LENGTH_SHORT).show()
                 }
             }catch (e: Exception){
-                Snackbar.make(it, R.string.check, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(it, R.string.check2, Snackbar.LENGTH_SHORT).show()
             }
         }
         return root

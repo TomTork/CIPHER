@@ -63,4 +63,5 @@
     <string name="length">Password length</string>
     <string name="number">Number of lines</string>
     <string name="max">Maximum length 32. Installed 32</string>
+    <string name="check2">Error! A file with the same name (key) probably already exists</string>
 </resources>

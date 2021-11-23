@@ -25,7 +25,7 @@ class Settings : AppCompatActivity() {
     private lateinit var input_length:                 EditText
     private lateinit var input_number:                 EditText
 
-    private lateinit var sw_store_image: SwitchCompat
+
 
     override fun onPause() {
         super.onPause()
@@ -38,10 +38,6 @@ class Settings : AppCompatActivity() {
         data.setRoom(change_default_room.text.toString())
         data.setName(change_default_name.text.toString())
         data.setCode(change_default_code.text.toString())
-        if(sw_store_image.isChecked){
-            data.setSWImage(1)
-        }
-        else data.setSWImage(0)
         if(input_length.text.toString().isEmpty()){
             data.setLength(16)
         }
@@ -63,7 +59,6 @@ class Settings : AppCompatActivity() {
         change_default_code.setText(data.getCode())
         input_length.setText(data.getLength().toString())
         input_number.setText(data.getNumber().toString())
-        sw_store_image.isChecked = data.getSWImage() != 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,7 +86,6 @@ class Settings : AppCompatActivity() {
         change_default_room = findViewById(R.id.change_default_room)
         change_default_name = findViewById(R.id.change_default_name)
         change_default_code = findViewById(R.id.change_default_code)
-        sw_store_image = findViewById(R.id.sw_store_image)
         input_length = findViewById(R.id.input_length)
         input_number = findViewById(R.id.input_number)
     }
