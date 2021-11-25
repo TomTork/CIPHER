@@ -14,21 +14,14 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.*
-import android.util.Log
 import android.view.*
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.lifecycleScope
 import com.anotherworld.encryption.databinding.FragmentImageBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import androidx.core.graphics.drawable.toBitmap
 import com.anotherworld.encryption.*
-import okio.ByteString.Companion.toByteString
 import java.io.*
-import java.net.URI
-import java.util.*
-import kotlin.math.absoluteValue
 
 var bitmap : Bitmap? = null
 
@@ -69,8 +62,6 @@ class ImageFragment : Fragment() {
                         data!!.data!!.lastPathSegment.toString().contains("document") || data!!.data!!.lastPathSegment.toString().contains(".txt") -> {
                             try{
                                 val name: String = data?.data!!.lastPathSegment.toString().substringAfterLast("/").substringBeforeLast(".").substringBefore("-CIPHER")
-                                Log.d("QQQQQ-r1", name)
-                                Log.d("QQQQQ-r32", "storage/self/" + data.data!!.path.toString().replaceFirst("/", "").substringAfter("/").replaceFirst(":", "/").replaceFirst("raw/", "raw"))
                                 val content12 = FileInputStream(File("storage/self/primary/Download/" + data.data!!.path.toString().substringAfter("Download/"))).bufferedReader().use{ it.readText() }.toString()
                                 preview.setImageBitmap(cour(name, content12))
                             }catch (e: Exception){
@@ -85,7 +76,6 @@ class ImageFragment : Fragment() {
                                 val byteArray = stream.toByteArray()
                                 val bmp: Bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                                 preview.setImageBitmap(bmp)
-                                //Log.d("QQQQQ-IMG", byteArray.toByteString().toString())
                                 Data().setWidth(preview.width)
                                 Data().setHeight(preview.height)
                                 when(Data().getTypeImage()){

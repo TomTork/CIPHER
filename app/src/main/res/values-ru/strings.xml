@@ -14,7 +14,8 @@
     <string-array name="choice_type_cipher">
         <item>AES/CBC/PKCS5Padding</item>
         <item>AES/GCM/NoPadding</item>
-        <item>Вынос ключа</item>
+        <item>CIPHER-1</item>
+        <item>CIPHER-2</item>
     </string-array>
     <string-array name="choice_type_image">
         <item>AES/CBC/PKCS5Padding</item>

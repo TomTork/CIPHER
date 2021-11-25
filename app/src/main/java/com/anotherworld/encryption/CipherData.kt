@@ -293,3 +293,77 @@ fun count(str: String, target: String): Int {
     if(target.isNotEmpty()) return (str.length - str.replace(target, "").length) / target.length
     return -1
 }
+class CIPHER2{ //Z = 0 Y = " "
+    fun encrypt(valueBase: String, secret: String): String{
+        val key = secret.hashCode().toString().substringAfter("-")
+        var f = 0
+        var answer = ""
+        val kk = valueBase.replace(" ", "Y")
+        val array = kk.toCharArray().map { String.format("%a", it.code.toFloat()).substringAfter(".") + randomUPPER() }
+        var value = array.toList().toString().filterNot { "[], ".indexOf(it) > -1 }.replace("0", "Z")
+        if (value[0].toString() == "0")value = value.replaceFirst("0", "1")
+        var onlyText = value.filterNot { "0123456789".indexOf(it) > -1 }
+        println(value)
+        for (i in onlyText.indices){
+            if (value.substringBefore(onlyText[0].toString()).isNotEmpty()){
+                answer += value.substringBefore(onlyText[0].toString()).toInt() shl key[f].toString().toInt()
+                value = value.replaceFirst(value.substringBefore(onlyText[0].toString()), "").replaceFirst(onlyText[0].toString(), "")
+                answer += onlyText[0].toString()
+                onlyText = onlyText.replaceFirst(onlyText[0].toString(), "")
+                if (f == key.length - 1)f = 0
+                else f++
+            }
+            else{
+                answer += value[0].toString()
+                onlyText = onlyText.replaceFirst(onlyText[0].toString(), "")
+                value = value.replaceFirst(value[0].toString(), "")
+            }
+        }
+        return answer
+    }
+    fun decrypt(valueBase: String, secret: String): String{
+        val key = secret.hashCode().toString().substringAfter("-")
+        var f = 0
+        var onlyText = valueBase.filterNot { "0123456789".indexOf(it) > -1 }
+        var answer = ""
+        var value = valueBase
+        for (i in onlyText.indices){
+            if (value.substringBefore(onlyText[0].toString()).isNotEmpty()){
+                answer += value.substringBefore(onlyText[0].toString()).toInt() shr key[f].toString().toInt()
+                value = value.replaceFirst(value.substringBefore(onlyText[0].toString()), "").replaceFirst(onlyText[0].toString(), "")
+                answer += onlyText[0].toString()
+                onlyText = onlyText.replaceFirst(onlyText[0].toString(), "")
+                if (f == key.length - 1)f = 0
+                else f++
+            }
+            else{
+                answer += value[0].toString()
+                onlyText = onlyText.replaceFirst(onlyText[0].toString(), "")
+                value = value.replaceFirst(value[0].toString(), "")
+            }
+        }
+        answer = answer.replace("Z", "0")
+        var new = ""
+        for (i in answer.indices){
+            new += if (answer[i].isUpperCase()) " "
+            else answer[i].toString()
+        }
+        new = "0x1.$new"
+        var new2 = ""
+        for (i in new.indices){
+            new2 += if (new[i].toString() == " ") " 0x1."
+            else new[i].toString()
+        }
+        new2 = new2.substringBeforeLast(" 0x1.")
+        val arr = new2.split(" ")
+        val final = ArrayList<String>()
+        for (i in arr.indices){
+            final.add(arr[i].toFloat().toInt().toChar().toString())
+        }
+        return final.toList().toString().filterNot { "[], ".indexOf(it) > -1 }.replace("Y", " ")
+    }
+    private fun randomUPPER(): String{
+        val random = Random()
+        return IntArray(1) { random.nextInt(88 - 65) + 65 }.asList().map { it.toChar() }.toString().filterNot { "[]".indexOf(it) > -1 }
+    }
+}
