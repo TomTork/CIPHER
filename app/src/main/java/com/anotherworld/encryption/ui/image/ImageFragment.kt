@@ -56,7 +56,7 @@ class ImageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        code.setText(Data().getKeyImage())
+        //code.setText(Data().getKeyImage())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -66,7 +66,18 @@ class ImageFragment : Fragment() {
             try {
                 lifecycleScope.launch {
                     when{
-                        data!!.data!!.lastPathSegment.toString().contains("image") -> {
+                        data!!.data!!.lastPathSegment.toString().contains("document") || data!!.data!!.lastPathSegment.toString().contains(".txt") -> {
+                            try{
+                                val name: String = data?.data!!.lastPathSegment.toString().substringAfterLast("/").substringBeforeLast(".").substringBefore("-CIPHER")
+                                Log.d("QQQQQ-r1", name)
+                                Log.d("QQQQQ-r32", "storage/self/" + data.data!!.path.toString().replaceFirst("/", "").substringAfter("/").replaceFirst(":", "/").replaceFirst("raw/", "raw"))
+                                val content12 = FileInputStream(File("storage/self/primary/Download/" + data.data!!.path.toString().substringAfter("Download/"))).bufferedReader().use{ it.readText() }.toString()
+                                preview.setImageBitmap(cour(name, content12))
+                            }catch (e: Exception){
+                                Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        else -> {
                             try{
                                 bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, filePath)
                                 val stream: ByteArrayOutputStream = ByteArrayOutputStream()
@@ -85,6 +96,8 @@ class ImageFragment : Fragment() {
                                             decode.setText(Data().getValue())
                                         }
                                         else Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
+                                        code.setText(a.key)
+                                        Data().setKeyImage(a.key)
                                     }
                                     1 -> {
                                         val gms = GMSFORIMAGE(byteArray, secret)
@@ -93,27 +106,13 @@ class ImageFragment : Fragment() {
                                             decode.setText(Data().getValue())
                                         }
                                         else Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
+                                        code.setText(gms.key)
+                                        Data().setKeyImage(gms.key)
                                     }
                                 }
                             }catch (e: Exception){
                                 Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
                             }
-                        }
-                        data!!.data!!.lastPathSegment.toString().contains("document") || data!!.data!!.lastPathSegment.toString().contains(".txt") -> {
-                            try{
-                                val name: String = data?.data!!.lastPathSegment.toString().substringAfterLast("/").substringBeforeLast(".").substringBefore("-CIPHER")
-                                Log.d("QQQQQ-r1", name)
-                                Log.d("QQQQQ-r32", "storage/self/" + data.data!!.path.toString().replaceFirst("/", "").substringAfter("/").replaceFirst(":", "/").replaceFirst("raw/", "raw"))
-                                val content12 = FileInputStream(File("storage/self/primary/Download/" + data.data!!.path.toString().substringAfter("Download/"))).bufferedReader().use{ it.readText() }.toString()
-
-                                preview.setImageBitmap(cour(name, content12))
-                            }catch (e: Exception){
-                                Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                        else -> {
-                            Log.d("QQQQQ-what", data!!.data!!.lastPathSegment.toString())
-                            Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -175,6 +174,7 @@ class ImageFragment : Fragment() {
                 code.setText(Math.random().toString().replace(".", (Math.random() * 10).toInt().toString()).substring(0, 16))
             }
             secret = code.text.toString()
+            data.setKeyImage(secret)
             chooseImage()
         }
         fullscreen.setOnClickListener {
@@ -202,7 +202,7 @@ class ImageFragment : Fragment() {
         save.setOnClickListener {
             try {
                 if(data.getValue().isNotEmpty() && decode.text.toString().isNotEmpty()){
-                    val path = "storage/self/primary/Download/" + code.text.toString() + "-CIPHER" + ".txt"
+                    val path = "storage/self/primary/Download/" + data.getKeyImage() + "-CIPHER" + ".txt"
                     val file = File(path)
                     file.createNewFile()
                     file.writeText(data.getValue())
@@ -210,7 +210,7 @@ class ImageFragment : Fragment() {
                 }
                 else if(decode.text.toString().isEmpty()){
                     val bi: Bitmap = preview.drawable.toBitmap()
-                    val file = File("storage/self/primary/Download/" + code.text.toString() + "-CIPHER_IMAGE" + ".png")
+                    val file = File("storage/self/primary/Download/" + data.getKeyImage() + "-CIPHER_IMAGE" + ".png")
                     val out = FileOutputStream(file)
                     bi.compress(Bitmap.CompressFormat.PNG, 100, out)
                     out.flush()

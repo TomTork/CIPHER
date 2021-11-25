@@ -16,7 +16,6 @@ class Settings : AppCompatActivity() {
     private lateinit var type_image:  AppCompatSpinner
 
     private lateinit var change_default_key_for_text:  EditText
-    private lateinit var change_default_key_for_image: EditText
     private lateinit var first:                        EditText
     private lateinit var second:                       EditText
     private lateinit var change_default_room:          EditText
@@ -32,7 +31,6 @@ class Settings : AppCompatActivity() {
         data.setTypeText(type_text.selectedItemPosition)
         data.setTypeImage(type_image.selectedItemPosition)
         data.setKeyText(change_default_key_for_text.text.toString())
-        data.setKeyImage(change_default_key_for_image.text.toString())
         data.setFirst(first.text.toString())
         data.setSecond(second.text.toString())
         data.setRoom(change_default_room.text.toString())
@@ -51,7 +49,6 @@ class Settings : AppCompatActivity() {
         type_text.setSelection(data.getTypeText())
         type_image.setSelection(data.getTypeImage())
         change_default_key_for_text.setText(data.getKeyText())
-        change_default_key_for_image.setText(data.getKeyImage())
         first.setText(data.getFirst())
         second.setText(data.getSecond())
         change_default_room.setText(data.getRoom())
@@ -80,7 +77,6 @@ class Settings : AppCompatActivity() {
         type_text = findViewById(R.id.type_text)
         type_image = findViewById(R.id.type_image)
         change_default_key_for_text = findViewById(R.id.change_default_key_for_text)
-        change_default_key_for_image = findViewById(R.id.change_default_key_for_image)
         first = findViewById(R.id.first)
         second = findViewById(R.id.second)
         change_default_room = findViewById(R.id.change_default_room)
