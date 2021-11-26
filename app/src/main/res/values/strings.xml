@@ -19,6 +19,7 @@
     <string-array name="choice_type_image">
         <item>AES/CBC/PKCS5Padding</item>
         <item>AES/GCM/NoPadding</item>
+        <item>CIPHER-IMAGE</item>
     </string-array>
     <string name="type">Type</string>
     <string name="code">Code</string>

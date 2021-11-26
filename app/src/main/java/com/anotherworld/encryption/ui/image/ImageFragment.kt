@@ -99,6 +99,12 @@ class ImageFragment : Fragment() {
                                         code.setText(gms.key)
                                         Data().setKeyImage(gms.key)
                                     }
+                                    2 -> {
+                                        val cIMAGE = CIPHERFORIMAGE()
+                                        if (cIMAGE.encrypt(byteArray))decode.setText(Data().getValue())
+                                        else Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
+                                        Data().setKeyImage("CIPHER-IMAGE" + Math.random().toString().replace(".", (Math.random() * 10).toInt().toString()).substring(0, 16))
+                                    }
                                 }
                             }catch (e: Exception){
                                 Toast.makeText(context, R.string.invalid, Toast.LENGTH_SHORT).show()
@@ -118,6 +124,12 @@ class ImageFragment : Fragment() {
                 val lstr = arrSTR.split(",")
                 val mas1: Array<Int> = lstr.map { it.toInt() }.toTypedArray()
                 val b: ByteArray = mas1.foldIndexed(ByteArray(mas1.size)) { i, a, v -> a.apply { set(i, v.toByte()) } }
+                val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
+                bmp
+            }
+            2 -> {
+                val c = CIPHERFORIMAGE()
+                val b: ByteArray = c.decrypt(content)
                 val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
                 bmp
             }

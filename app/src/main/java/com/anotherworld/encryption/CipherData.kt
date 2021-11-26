@@ -367,3 +367,17 @@ class CIPHER2{ //Z = 0 Y = " "
         return IntArray(1) { random.nextInt(88 - 65) + 65 }.asList().map { it.toChar() }.toString().filterNot { "[]".indexOf(it) > -1 }
     }
 }
+class CIPHERFORIMAGE(){
+    val sl = Array(256){ (195 + it + 1).toChar().toString() }
+    val numbers = IntArray(256){ -129 + it + 1 }
+    fun encrypt(byteArray: ByteArray): Boolean{
+        val answer = byteArray.map { sl[numbers.indexOf(it.toInt())] }.toList().toString()
+        Data().setValue(answer.filterNot { "[], -0123456789".indexOf(it) > -1 })
+        if (Data().getValue() != "")return true
+        return false
+    }
+    fun decrypt(value: String): ByteArray{
+        val ans: ByteArray = value.map { numbers[sl.indexOf(it.toString())].toByte() }.toTypedArray().toByteArray()
+        return ans
+    }
+}
