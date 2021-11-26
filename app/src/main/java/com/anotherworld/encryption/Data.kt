@@ -22,12 +22,12 @@ class Data {
     private val code = File(d("code"))
     private val type_text = File(d("typetext"))
     private val type_image = File(d("typeimage"))
-    private val sw_image = File(d("swimage"))
     private val len_password = File(d("len"))
     private val number = File(d("number"))
+    private val user = File(d("user"))
     init {
         try{
-            if (!height.exists() || !key_text.exists() || !len_password.exists() || !number.exists()){
+            if (!height.exists() || !key_text.exists() || !len_password.exists() || !number.exists() || !user.exists()){
                 width.createNewFile()
                 height.createNewFile()
                 value.createNewFile()
@@ -42,17 +42,17 @@ class Data {
                 code.createNewFile()
                 type_text.createNewFile()
                 type_image.createNewFile()
-                sw_image.createNewFile()
                 len_password.createNewFile()
+                user.createNewFile()
 
                 setNumber(10)
                 setLength(16)
                 setTypeText(0)
                 setTypeImage(0)
-                setSWImage(0)
 
                 setHeight(0)
                 setWidth(0)
+                setUser(0)
             }
         }catch (e: FileNotFoundException){
             width.createNewFile()
@@ -69,18 +69,24 @@ class Data {
             code.createNewFile()
             type_text.createNewFile()
             type_image.createNewFile()
-            sw_image.createNewFile()
             len_password.createNewFile()
+            user.createNewFile()
 
             setNumber(10)
             setLength(16)
             setTypeText(0)
             setTypeImage(0)
-            setSWImage(0)
 
             setHeight(0)
             setWidth(0)
+            setUser(0)
         }
+    }
+    fun setUser(value: Int){
+        user.writeText(value.toString())
+    }
+    fun getUser(): Int{
+        return FileInputStream(user).bufferedReader().use { it.readText() }.toString().toInt()
     }
     fun setNumber(value: Int){
         number.writeText(value.toString())
@@ -93,12 +99,6 @@ class Data {
     }
     fun setLength(value: Int){
         len_password.writeText(value.toString())
-    }
-    fun setSWImage(value: Int){
-        sw_image.writeText(value.toString())
-    }
-    fun getSWImage(): Int{
-        return FileInputStream(sw_image).bufferedReader().use { it.readText() }.toString().toInt()
     }
     fun getTypeImage(): Int{
         return FileInputStream(type_image).bufferedReader().use { it.readText() }.toString().toInt()

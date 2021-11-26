@@ -47,11 +47,6 @@ class ImageFragment : Fragment() {
     private val PICK_IMAGE_REQUEST = 71
     var data: Data = Data()
 
-    override fun onResume() {
-        super.onResume()
-        //code.setText(Data().getKeyImage())
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === PICK_IMAGE_REQUEST && resultCode === RESULT_OK && attr.data != null) {

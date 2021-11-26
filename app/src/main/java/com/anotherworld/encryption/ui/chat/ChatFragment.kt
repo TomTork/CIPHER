@@ -2,7 +2,6 @@ package com.anotherworld.encryption.ui.chat
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,13 +14,10 @@ import com.anotherworld.encryption.Data
 import com.anotherworld.encryption.R
 import com.anotherworld.encryption.databinding.FragmentChatBinding
 import com.firebase.ui.database.FirebaseListAdapter
-import com.google.android.gms.tasks.OnCompleteListener
 import kotlinx.coroutines.launch
 
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
@@ -68,7 +64,10 @@ class ChatFragment : Fragment() {
         timer()
         auth = Firebase.auth
         mAuth = Firebase.auth
-        mAuth.signInAnonymously()
+        if (Data().getUser() == 0){
+            mAuth.signInAnonymously()
+            Data().setUser(1)
+        }
         send.setOnClickListener {
             if(inputChat.text.toString().isNotEmpty() && name.text.toString().isNotEmpty() && cipher.text.toString().isNotEmpty() && code_room.text.toString().isNotEmpty()){
                 key = AESFORFIREBASE(inputChat.text.toString(), cipher.text.toString()).key

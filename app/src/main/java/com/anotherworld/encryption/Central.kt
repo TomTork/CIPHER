@@ -8,7 +8,6 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,14 +16,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.view.get
 import com.anotherworld.encryption.databinding.ActivityCentralBinding
 import java.util.*
-import androidx.core.app.ActivityCompat.requestPermissions
 
 import android.os.Build
-import android.util.Log
+
 
 class Central : AppCompatActivity() {
     private val PERMISSION_REQUEST_CODE = 123

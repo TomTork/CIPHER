@@ -2,12 +2,9 @@ package com.anotherworld.encryption
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatSpinner
-import androidx.appcompat.widget.SwitchCompat
 
 class Settings : AppCompatActivity() {
     val data = Data()

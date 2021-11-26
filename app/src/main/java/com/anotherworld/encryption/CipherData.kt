@@ -1,8 +1,5 @@
 package com.anotherworld.encryption
 
-import android.util.Base64.*
-import java.security.Key
-import java.security.KeyPairGenerator
 import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
