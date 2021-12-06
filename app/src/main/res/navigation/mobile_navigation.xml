@@ -39,6 +39,19 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_directory"
+        android:name="com.anotherworld.encryption.ui.directory.DirectoryFragment"
+        android:label="@string/directory"
+        tools:layout="@layout/fragment_directory" >
+        <action
+            android:id="@+id/action_nav_directory_to_nav_text"
+            app:destination="@id/nav_text" />
+        <action
+            android:id="@+id/action_nav_directory_to_nav_scale"
+            app:destination="@id/nav_scale" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_scale"
         android:name="com.anotherworld.encryption.ui.scale.ScaleFragment"
         android:label="@string/menu_scale"

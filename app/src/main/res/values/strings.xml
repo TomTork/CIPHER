@@ -21,6 +21,11 @@
         <item>AES/GCM/NoPadding</item>
         <item>CIPHER-IMAGE</item>
     </string-array>
+    <string-array name="folder_type">
+        <item>AES/CBC/PKCS5Padding</item>
+        <item>AES/GCM/NoPadding</item>
+        <item>CIPHER-2</item>
+    </string-array>
     <string name="type">Type</string>
     <string name="code">Code</string>
     <string name="code_room">Code Room</string>
@@ -66,4 +71,7 @@
     <string name="number">Number of lines</string>
     <string name="max">Maximum length 32. Installed 32</string>
     <string name="check2">Error! A file with the same name (key) probably already exists</string>
+    <string name="directory">Protect folder</string>
+    <string name="create">Create as copy</string>
+    <string name="select">Select</string>
 </resources>

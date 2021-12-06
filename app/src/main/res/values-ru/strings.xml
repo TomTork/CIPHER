@@ -22,6 +22,11 @@
         <item>AES/GCM/NoPadding</item>
         <item>CIPHER-IMAGE</item>
     </string-array>
+    <string-array name="folder_type">
+        <item>AES/CBC/PKCS5Padding</item>
+        <item>AES/GCM/NoPadding</item>
+        <item>CIPHER-2</item>
+    </string-array>
     <string name="type">Тип</string>
     <string name="code">Код</string>
     <string name="code_room">Код комнаты</string>
@@ -67,4 +72,7 @@
     <string name="number">Количество строк</string>
     <string name="max">Максимальная длина 32. Установлено 32</string>
     <string name="check2">Ошибка! Вероятно файл с таким именем (ключ) уже существует</string>
+    <string name="directory">Защищенная папка</string>
+    <string name="create">Создать как копию</string>
+    <string name="select">Выбрать</string>
 </resources>

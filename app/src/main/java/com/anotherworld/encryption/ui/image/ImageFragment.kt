@@ -14,6 +14,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.*
+import android.util.Log
 import android.view.*
 import androidx.lifecycle.lifecycleScope
 import com.anotherworld.encryption.databinding.FragmentImageBinding
