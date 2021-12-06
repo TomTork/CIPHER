@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import android.R.attr
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -16,6 +17,7 @@ import android.graphics.BitmapFactory
 import android.os.*
 import android.util.Log
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import com.anotherworld.encryption.databinding.FragmentImageBinding
 import com.google.android.material.snackbar.Snackbar
@@ -45,12 +47,37 @@ class ImageFragment : Fragment() {
     var widthPreview = Data().getWidth()
 
     private var filePath: Uri? = null
-    private val PICK_IMAGE_REQUEST = 71
     var data: Data = Data()
+    private fun cour(name: String, content: String): Bitmap{
+        return when(Data().getTypeImage()){
+            0 -> {
+                val arrSTR: String = AES(byteArrayOf(), name, "AES/CBC/PKCS5Padding", content).decrypt()
+                val lstr = arrSTR.split(",")
+                val mas1: Array<Int> = lstr.map { it.toInt() }.toTypedArray()
+                val b: ByteArray = mas1.foldIndexed(ByteArray(mas1.size)) { i, a, v -> a.apply { set(i, v.toByte()) } }
+                val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
+                bmp
+            }
+            2 -> {
+                val c = CIPHERFORIMAGE()
+                val b: ByteArray = c.decrypt(content)
+                val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
+                bmp
+            }
+            else -> {
+                val arrSTR: String = GMSFORIMAGE(byteArrayOf(), name, content).decrypt()
+                val lstr = arrSTR.split(",")
+                val mas1: Array<Int> = lstr.map { it.toInt() }.toTypedArray()
+                val b: ByteArray = mas1.foldIndexed(ByteArray(mas1.size)) { i, a, v -> a.apply { set(i, v.toByte()) } }
+                val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
+                bmp
+            }
+        }
+    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === PICK_IMAGE_REQUEST && resultCode === RESULT_OK && attr.data != null) {
+    private var launchSomeActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
             filePath = data?.data
             try {
                 lifecycleScope.launch {
@@ -113,37 +140,12 @@ class ImageFragment : Fragment() {
             }
         }
     }
-    private fun cour(name: String, content: String): Bitmap{
-        return when(Data().getTypeImage()){
-            0 -> {
-                val arrSTR: String = AES(byteArrayOf(), name, "AES/CBC/PKCS5Padding", content).decrypt()
-                val lstr = arrSTR.split(",")
-                val mas1: Array<Int> = lstr.map { it.toInt() }.toTypedArray()
-                val b: ByteArray = mas1.foldIndexed(ByteArray(mas1.size)) { i, a, v -> a.apply { set(i, v.toByte()) } }
-                val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
-                bmp
-            }
-            2 -> {
-                val c = CIPHERFORIMAGE()
-                val b: ByteArray = c.decrypt(content)
-                val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
-                bmp
-            }
-            else -> {
-                val arrSTR: String = GMSFORIMAGE(byteArrayOf(), name, content).decrypt()
-                val lstr = arrSTR.split(",")
-                val mas1: Array<Int> = lstr.map { it.toInt() }.toTypedArray()
-                val b: ByteArray = mas1.foldIndexed(ByteArray(mas1.size)) { i, a, v -> a.apply { set(i, v.toByte()) } }
-                val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
-                bmp
-            }
-        }
-    }
+
     private fun chooseImage() {
         val intent = Intent()
         intent.type = "*/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+        launchSomeActivity.launch(intent)
     }
     private val binding get() = _binding!!
 
