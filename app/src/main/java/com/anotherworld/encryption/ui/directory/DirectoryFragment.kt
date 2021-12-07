@@ -3,7 +3,7 @@ package com.anotherworld.encryption.ui.directory
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,12 +19,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.anotherworld.encryption.R
 import com.anotherworld.encryption.databinding.FragmentDirectoryBinding
-import com.google.android.material.snackbar.Snackbar
+import org.apache.commons.io.FileUtils
 import java.io.*
-import java.lang.Exception
 import java.util.zip.ZipEntry
-import java.util.zip.ZipException
 import java.util.zip.ZipOutputStream
+import android.os.Environment
+
+
+
 
 class DirectoryFragment : Fragment() {
     private var radio = 0
@@ -39,7 +41,6 @@ class DirectoryFragment : Fragment() {
     private lateinit var encrypt: RadioButton
     private lateinit var decrypt: RadioButton
 
-    private val PICK_REQUEST = 71
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,14 +59,36 @@ class DirectoryFragment : Fragment() {
         select.setOnClickListener { choose() }
         return root
     }
-
     private var launchSomeActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val filePath = "storage/self/primary/" + data?.data!!.path!!.substringAfterLast(":")
-            createZip(filePath, data?.data!!.path!!.substringAfterLast(":"))
+            zipAll(filePath, "storage/self/primary/Download/out${(Math.random() * 10000).toInt()}-CIPHER.zip")
+            if (!create_checkbox.isChecked){
+                val dir = File(filePath)
+                if (dir.isDirectory) {
+                    val children = dir.list()!!
+                    for (i in children.indices) {
+                        File(dir, children[i]).delete()
+                    }
+                }
+            }
         }
     }
+    private var countDownTimer: CountDownTimer? = null
+    private var sec = 5
+    private fun timer(filePath: String){
+        countDownTimer = object : CountDownTimer((sec * 1000).toLong(), 1000){
+            override fun onTick(p0: Long) {
+                sec--
+            }
+            override fun onFinish() {
+
+            }
+        }
+        countDownTimer!!.start()
+    }
+
 
     private fun choose() {
         if(radio == 0 && encrypt.isChecked){
@@ -82,28 +105,52 @@ class DirectoryFragment : Fragment() {
             Toast.makeText(context, R.string.check, Toast.LENGTH_SHORT).show()
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    private fun createZip(filepath: String, filename: String){
-        try {
-            ZipOutputStream(FileOutputStream("storage/self/primary/CIPHER/output.zip")).use { zout ->
-                FileInputStream(filename).use { fis ->
-                    val entry1 = ZipEntry("notes.txt")
-                    zout.putNextEntry(entry1)
-                    // считываем содержимое файла в массив byte
-                    val buffer = ByteArray(fis.available())
-                    fis.read(buffer)
-                    // добавляем содержимое к архиву
-                    zout.write(buffer)
-                    // закрываем текущую запись для новой записи
-                    zout.closeEntry()
+    fun zipAll(directory: String, zipFile: String) {
+        val sourceFile = File(directory)
+        ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use {
+            it.use {
+                zipFiles(it, sourceFile, "")
+            }
+        }
+    }
+    private fun zipFiles(zipOut: ZipOutputStream, sourceFile: File, parentDirPath: String) {
+        val data = ByteArray(2048)
+        for (f in sourceFile.listFiles()) {
+            if (f.isDirectory) {
+                val entry = ZipEntry(f.name + File.separator)
+                entry.time = f.lastModified()
+                entry.isDirectory
+                entry.size = f.length()
+                zipOut.putNextEntry(entry)
+                zipFiles(zipOut, f, f.name)
+            } else {
+                if (!f.name.contains(".zip")) {
+                    FileInputStream(f).use { fi ->
+                        BufferedInputStream(fi).use { origin ->
+                            val path = parentDirPath + File.separator + f.name
+                            val entry = ZipEntry(path)
+                            entry.time = f.lastModified()
+                            entry.isDirectory
+                            entry.size = f.length()
+                            zipOut.putNextEntry(entry)
+                            while (true) {
+                                val readBytes = origin.read(data)
+                                if (readBytes == -1) {
+                                    break
+                                }
+                                zipOut.write(data, 0, readBytes)
+                            }
+                        }
+                    }
+                } else {
+                    zipOut.closeEntry()
+                    zipOut.close()
                 }
             }
-        } catch (ex: Exception) {
-            ex.printStackTrace()
         }
     }
 
