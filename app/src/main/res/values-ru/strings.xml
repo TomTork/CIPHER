@@ -75,4 +75,5 @@
     <string name="directory">Защищенная папка</string>
     <string name="create">Создать как копию</string>
     <string name="select">Выбрать</string>
+    <string name="error_folder">Возникла ошибка! Проверьте наличие папки "/Download" на вашем устройстве</string>
 </resources>

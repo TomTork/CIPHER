@@ -3,6 +3,7 @@ package com.anotherworld.encryption.ui.directory
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ import com.anotherworld.encryption.R
 import com.anotherworld.encryption.databinding.FragmentDirectoryBinding
 import java.io.*
 import androidx.appcompat.widget.AppCompatEditText
+import com.anotherworld.encryption.Data
+import com.google.android.material.snackbar.Snackbar
 import net.lingala.zip4j.model.enums.AesKeyStrength
 
 import net.lingala.zip4j.model.enums.EncryptionMethod
@@ -44,6 +47,7 @@ class DirectoryFragment : Fragment() {
         encrypt = root.findViewById(R.id.encrypt_folder)
         decrypt = root.findViewById(R.id.decrypt_folder)
         key = root.findViewById(R.id.key)
+        key.setText(Data().getKeyFolder())
         encrypt.setOnClickListener { radio = 0; decrypt.isChecked = false }
         decrypt.setOnClickListener { radio = 1; encrypt.isChecked = false }
 
@@ -54,24 +58,28 @@ class DirectoryFragment : Fragment() {
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val filePath = "storage/self/primary/" + data?.data!!.path!!.substringAfterLast(":")
-            if(encrypt.isChecked){
-                val zipParameters = ZipParameters()
-                zipParameters.isEncryptFiles = true
-                zipParameters.encryptionMethod = EncryptionMethod.AES
-                zipParameters.aesKeyStrength = AesKeyStrength.KEY_STRENGTH_256
-                val filesToAdd = File(filePath).listFiles().toList()
-                val zipFile: net.lingala.zip4j.ZipFile = net.lingala.zip4j.ZipFile("storage/self/primary/Download/${(Math.random() * 10000).toInt()}-OUT-CIPHER.zip", key.text.toString().toCharArray())
-                zipFile.addFiles(filesToAdd, zipParameters)
-            }
-            else if(decrypt.isChecked){
-                val filePassword = key.text.toString()
-                val destinationAddress = "storage/self/primary/Download/"
-                val zipFile = net.lingala.zip4j.ZipFile(filePath, filePassword.toCharArray())
-                try {
-                    zipFile.extractAll(destinationAddress)
-                } catch (e: Exception) {
-                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
+            try {
+                if(encrypt.isChecked){
+                    val zipParameters = ZipParameters()
+                    zipParameters.isEncryptFiles = true
+                    zipParameters.encryptionMethod = EncryptionMethod.AES
+                    zipParameters.aesKeyStrength = AesKeyStrength.KEY_STRENGTH_256
+                    val filesToAdd = File(filePath).listFiles().toList()
+                    val zipFile: net.lingala.zip4j.ZipFile = net.lingala.zip4j.ZipFile("storage/self/primary/Download/${(Math.random() * 10000).toInt()}-OUT-CIPHER.zip", key.text.toString().toCharArray())
+                    zipFile.addFiles(filesToAdd, zipParameters)
                 }
+                else if(decrypt.isChecked){
+                    val filePassword = key.text.toString()
+                    val destinationAddress = "storage/self/primary/Download/"
+                    val zipFile = net.lingala.zip4j.ZipFile(filePath, filePassword.toCharArray())
+                    try {
+                        zipFile.extractAll(destinationAddress)
+                    } catch (e: Exception) {
+                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }catch (e: Exception){
+                Toast.makeText(context, R.string.error_folder, Toast.LENGTH_LONG).show()
             }
         }
     }

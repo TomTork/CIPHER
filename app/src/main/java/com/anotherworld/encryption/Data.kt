@@ -25,9 +25,10 @@ class Data {
     private val len_password = File(d("len"))
     private val number = File(d("number"))
     private val user = File(d("user"))
+    private val key_folder = File(d("keyfolder"))
     init {
         try{
-            if (!height.exists() || !key_text.exists() || !len_password.exists() || !number.exists() || !user.exists()){
+            if (!height.exists() || !key_text.exists() || !len_password.exists() || !number.exists() || !user.exists() || !key_folder.exists()){
                 width.createNewFile()
                 height.createNewFile()
                 value.createNewFile()
@@ -44,6 +45,7 @@ class Data {
                 type_image.createNewFile()
                 len_password.createNewFile()
                 user.createNewFile()
+                key_folder.createNewFile()
 
                 setNumber(10)
                 setLength(16)
@@ -71,6 +73,7 @@ class Data {
             type_image.createNewFile()
             len_password.createNewFile()
             user.createNewFile()
+            key_folder.createNewFile()
 
             setNumber(10)
             setLength(16)
@@ -81,6 +84,12 @@ class Data {
             setWidth(0)
             setUser(0)
         }
+    }
+    fun setKeyFolder(value: String){
+        key_folder.writeText(value)
+    }
+    fun getKeyFolder(): String{
+        return FileInputStream(key_folder).bufferedReader().use { it.readText() }.toString()
     }
     fun setUser(value: Int){
         user.writeText(value.toString())

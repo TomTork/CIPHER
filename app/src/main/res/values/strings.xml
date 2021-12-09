@@ -74,4 +74,5 @@
     <string name="directory">Protect folder</string>
     <string name="create">Create as copy</string>
     <string name="select">Select</string>
+    <string name="error_folder">An error has occurred! Check for a "/Download" folder on your device</string>
 </resources>

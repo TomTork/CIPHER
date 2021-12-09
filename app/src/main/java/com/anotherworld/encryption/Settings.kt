@@ -20,8 +20,7 @@ class Settings : AppCompatActivity() {
     private lateinit var change_default_code:          EditText
     private lateinit var input_length:                 EditText
     private lateinit var input_number:                 EditText
-
-
+    private lateinit var change_default_key_for_folder:EditText
 
     override fun onPause() {
         super.onPause()
@@ -33,6 +32,7 @@ class Settings : AppCompatActivity() {
         data.setRoom(change_default_room.text.toString())
         data.setName(change_default_name.text.toString())
         data.setCode(change_default_code.text.toString())
+        data.setKeyFolder(change_default_key_for_folder.text.toString())
         if(input_length.text.toString().isEmpty()){
             data.setLength(16)
         }
@@ -53,6 +53,7 @@ class Settings : AppCompatActivity() {
         change_default_code.setText(data.getCode())
         input_length.setText(data.getLength().toString())
         input_number.setText(data.getNumber().toString())
+        change_default_key_for_folder.setText(data.getKeyFolder())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,5 +82,6 @@ class Settings : AppCompatActivity() {
         change_default_code = findViewById(R.id.change_default_code)
         input_length = findViewById(R.id.input_length)
         input_number = findViewById(R.id.input_number)
+        change_default_key_for_folder = findViewById(R.id.change_default_key_for_folder)
     }
 }
