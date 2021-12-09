@@ -24,8 +24,10 @@ import java.io.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import android.os.Environment
-
-
+import androidx.appcompat.widget.AppCompatEditText
+import com.anotherworld.encryption.CipherForZip
+import java.lang.Exception
+import java.util.zip.ZipInputStream
 
 
 class DirectoryFragment : Fragment() {
@@ -33,10 +35,7 @@ class DirectoryFragment : Fragment() {
 
     private lateinit var slideshowViewModel: DirectoryViewModel
     private var _binding: FragmentDirectoryBinding? = null
-
-    private lateinit var key: EditText
-    private lateinit var folder_spinner: AppCompatSpinner
-    private lateinit var create_checkbox: AppCompatCheckBox
+    private lateinit var key: AppCompatEditText
     private lateinit var select: AppCompatButton
     private lateinit var encrypt: RadioButton
     private lateinit var decrypt: RadioButton
@@ -47,12 +46,10 @@ class DirectoryFragment : Fragment() {
         slideshowViewModel = ViewModelProvider(this).get(DirectoryViewModel::class.java)
         _binding = FragmentDirectoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        key = root.findViewById(R.id.key)
-        folder_spinner = root.findViewById(R.id.folder_spinner)
-        create_checkbox = root.findViewById(R.id.create_checkbox)
         select = root.findViewById(R.id.select)
         encrypt = root.findViewById(R.id.encrypt_folder)
         decrypt = root.findViewById(R.id.decrypt_folder)
+        key = root.findViewById(R.id.key)
         encrypt.setOnClickListener { radio = 0; decrypt.isChecked = false }
         decrypt.setOnClickListener { radio = 1; encrypt.isChecked = false }
 
@@ -63,39 +60,20 @@ class DirectoryFragment : Fragment() {
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val filePath = "storage/self/primary/" + data?.data!!.path!!.substringAfterLast(":")
-            zipAll(filePath, "storage/self/primary/Download/out${(Math.random() * 10000).toInt()}-CIPHER.zip")
-            if (!create_checkbox.isChecked){
-                val dir = File(filePath)
-                if (dir.isDirectory) {
-                    val children = dir.list()!!
-                    for (i in children.indices) {
-                        File(dir, children[i]).delete()
-                    }
-                }
+            if(encrypt.isChecked){
+                zipAll(filePath, "storage/self/primary/Download/out${(Math.random() * 10000).toInt()}-CIPHER.zip")
+            }
+            else if(decrypt.isChecked){
+                Log.d("QQQQQ-TEG", filePath)
             }
         }
     }
-    private var countDownTimer: CountDownTimer? = null
-    private var sec = 5
-    private fun timer(filePath: String){
-        countDownTimer = object : CountDownTimer((sec * 1000).toLong(), 1000){
-            override fun onTick(p0: Long) {
-                sec--
-            }
-            override fun onFinish() {
-
-            }
-        }
-        countDownTimer!!.start()
-    }
-
-
     private fun choose() {
-        if(radio == 0 && encrypt.isChecked){
+        if(radio == 0 && encrypt.isChecked && key.text.toString().isNotEmpty()){
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
             launchSomeActivity.launch(intent)
         }
-        else if(radio == 1 && decrypt.isChecked){
+        else if(radio == 1 && decrypt.isChecked && key.text.toString().isNotEmpty()){
             val intent = Intent()
             intent.type = "*/*"
             intent.action = Intent.ACTION_GET_CONTENT
@@ -137,12 +115,15 @@ class DirectoryFragment : Fragment() {
                             entry.isDirectory
                             entry.size = f.length()
                             zipOut.putNextEntry(entry)
+                            //val encrypt_data: ByteArray = CipherForZip().encrypt(data, key.text.toString())
                             while (true) {
-                                val readBytes = origin.read(data)
+                                //val readBytes = origin.read(data)
+                                val readBytes = origin.read(CipherForZip().encrypt(data, key.text.toString()))
                                 if (readBytes == -1) {
                                     break
                                 }
-                                zipOut.write(data, 0, readBytes)
+                                //zipOut.write(data, 0, readBytes)
+                                zipOut.write(CipherForZip().encrypt(data, key.text.toString()), 0, readBytes)
                             }
                         }
                     }
@@ -153,5 +134,40 @@ class DirectoryFragment : Fragment() {
             }
         }
     }
-
+}
+private class Decompress(private val zipFile: String, private val location: String) {
+    fun unzip() {
+        try {
+            val fin = FileInputStream(zipFile)
+            val zin = ZipInputStream(fin)
+            var ze: ZipEntry? = null
+            while (zin.nextEntry.also { ze = it } != null) {
+                Log.v("Decompress", "Unzipping " + ze!!.name)
+                if (ze!!.isDirectory) {
+                    dirChecker(ze!!.name)
+                } else {
+                    val fout = FileOutputStream(location + ze!!.name)
+                    var c: Int = zin.read()
+                    while (c != -1) {
+                        fout.write(c)
+                        c = zin.read()
+                    }
+                    zin.closeEntry()
+                    fout.close()
+                }
+            }
+            zin.close()
+        } catch (e: Exception) {
+            Log.e("Decompress", "unzip", e)
+        }
+    }
+    private fun dirChecker(dir: String) {
+        val f = File(location + dir)
+        if (!f.isDirectory) {
+            f.mkdirs()
+        }
+    }
+    init {
+        dirChecker("")
+    }
 }

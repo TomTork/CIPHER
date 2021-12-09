@@ -8,6 +8,8 @@ import javax.crypto.spec.SecretKeySpec
 
 class CipherData {}
 
+
+
 class AES(s: ByteArray, secret: String, method: String, encr: String = ""){
     var enc = s.toList().toString().replace("[", "").replace("]", "").replace(" ", "")
     var key = secret
@@ -364,6 +366,7 @@ class CIPHER2{ //Z = 0 Y = " "
         return IntArray(1) { random.nextInt(88 - 65) + 65 }.asList().map { it.toChar() }.toString().filterNot { "[]".indexOf(it) > -1 }
     }
 }
+
 class CIPHERFORIMAGE(){
     val sl = Array(256){ (195 + it + 1).toChar().toString() }
     val numbers = IntArray(256){ -129 + it + 1 }
@@ -376,5 +379,33 @@ class CIPHERFORIMAGE(){
     fun decrypt(value: String): ByteArray{
         val ans: ByteArray = value.map { numbers[sl.indexOf(it.toString())].toByte() }.toTypedArray().toByteArray()
         return ans
+    }
+}
+
+class CipherForZip(){
+    fun encrypt(byteArray: ByteArray, key: String): ByteArray{
+        val masKey = key.hashCode().toString().chunked(1)
+        var k = 0
+        val b = byteArray
+        for (i in byteArray.indices){
+            if (b[i].toInt() + masKey[k].toInt() <= 127){
+                byteArray[i] = (byteArray[i] + masKey[k].toInt()).toByte()
+                if(k + 1 == masKey.size)k = 0
+                else k++
+            }
+        }
+        return byteArray
+    }
+    fun decrypt(byteArray: ByteArray, key: String): ByteArray{
+        val masKey = key.hashCode().toString().chunked(1)
+        var k = 0
+        for(i in byteArray.indices){
+            if(byteArray[i].toInt() + masKey[k].toInt() <= 127){
+                byteArray[i] = (byteArray[i].toInt() - masKey[k].toInt()).toByte()
+                if(k + 1 == masKey.size)k = 0
+                else k++
+            }
+        }
+        return byteArray
     }
 }
