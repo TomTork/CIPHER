@@ -1,5 +1,6 @@
 package com.anotherworld.encryption
 
+import android.util.Log
 import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -384,6 +385,7 @@ class CIPHERFORIMAGE(){
 
 class CipherForZip(){
     fun encrypt(byteArray: ByteArray, key: String): ByteArray{
+        Log.e("QQQQQ-1", byteArray.toList().toString().substring(0, 16))
         val masKey = key.hashCode().toString().chunked(1)
         var k = 0
         val b = byteArray
@@ -394,9 +396,11 @@ class CipherForZip(){
                 else k++
             }
         }
+        Log.e("QQQQQ-2", byteArray.toList().toString().substring(0, 16))
         return byteArray
     }
     fun decrypt(byteArray: ByteArray, key: String): ByteArray{
+        Log.e("QQQQQ-3", byteArray.toList().toString().substring(0, 16))
         val masKey = key.hashCode().toString().chunked(1)
         var k = 0
         for(i in byteArray.indices){
@@ -406,6 +410,7 @@ class CipherForZip(){
                 else k++
             }
         }
+        Log.e("QQQQQ-4", byteArray.toList().toString().substring(0, 16))
         return byteArray
     }
 }
