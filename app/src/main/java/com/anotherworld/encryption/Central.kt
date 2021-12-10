@@ -3,6 +3,7 @@ package com.anotherworld.encryption
 import android.Manifest
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
