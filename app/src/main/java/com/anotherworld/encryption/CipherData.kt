@@ -1,6 +1,5 @@
 package com.anotherworld.encryption
 
-import android.util.Log
 import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -8,8 +7,6 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 class CipherData {}
-
-
 
 class AES(s: ByteArray, secret: String, method: String, encr: String = ""){
     var enc = s.toList().toString().replace("[", "").replace("]", "").replace(" ", "")
@@ -380,37 +377,5 @@ class CIPHERFORIMAGE(){
     fun decrypt(value: String): ByteArray{
         val ans: ByteArray = value.map { numbers[sl.indexOf(it.toString())].toByte() }.toTypedArray().toByteArray()
         return ans
-    }
-}
-
-class CipherForZip(){
-    fun encrypt(byteArray: ByteArray, key: String): ByteArray{
-        Log.e("QQQQQ-1", byteArray.toList().toString().substring(0, 16))
-        val masKey = key.hashCode().toString().chunked(1)
-        var k = 0
-        val b = byteArray
-        for (i in byteArray.indices){
-            if (b[i].toInt() + masKey[k].toInt() <= 127){
-                byteArray[i] = (byteArray[i] + masKey[k].toInt()).toByte()
-                if(k + 1 == masKey.size)k = 0
-                else k++
-            }
-        }
-        Log.e("QQQQQ-2", byteArray.toList().toString().substring(0, 16))
-        return byteArray
-    }
-    fun decrypt(byteArray: ByteArray, key: String): ByteArray{
-        Log.e("QQQQQ-3", byteArray.toList().toString().substring(0, 16))
-        val masKey = key.hashCode().toString().chunked(1)
-        var k = 0
-        for(i in byteArray.indices){
-            if(byteArray[i].toInt() + masKey[k].toInt() <= 127){
-                byteArray[i] = (byteArray[i].toInt() - masKey[k].toInt()).toByte()
-                if(k + 1 == masKey.size)k = 0
-                else k++
-            }
-        }
-        Log.e("QQQQQ-4", byteArray.toList().toString().substring(0, 16))
-        return byteArray
     }
 }

@@ -3,7 +3,6 @@ package com.anotherworld.encryption
 import android.Manifest
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -20,9 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import com.anotherworld.encryption.databinding.ActivityCentralBinding
 import java.util.*
-
 import android.os.Build
-
 
 class Central : AppCompatActivity() {
     private val PERMISSION_REQUEST_CODE = 123
