@@ -379,3 +379,144 @@ class CIPHERFORIMAGE(){
         return ans
     }
 }
+
+class Base64ForText{
+    fun encrypt(value: String): String{
+        return Base64.getEncoder().encodeToString(value.toByteArray())
+    }
+    fun decrypt(value: String): String{
+        return String(Base64.getDecoder().decode(value))
+    }
+}
+class BLOWFISHForText(value: String, secret: String){ //BLOWFISH/CBC/ISO10126Padding
+    var key = secret
+    var vv = value
+    init {
+        if (key.length < 8){
+            do {
+                key += (Math.random() * 10).toInt()
+            }while (key.length != 8)
+        }
+        else if(key.length > 8){
+            key = key.substring(0, 8).replace(".", "1")
+        }
+    }
+    fun encrypt(value: String = vv, password: String = key): String {
+        val secretKeySpec = SecretKeySpec(password.toByteArray(), "BLOWFISH")
+        val iv = ByteArray(8)
+        val charArray = password.toCharArray()
+        for (i in charArray.indices){
+            iv[i] = charArray[i].toByte()
+        }
+        val ivParameterSpec = IvParameterSpec(iv)
+        val cipher = Cipher.getInstance("BLOWFISH/CBC/ISO10126Padding")
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec)
+        val encryptedValue = cipher.doFinal(value.toByteArray())
+        return Base64.getEncoder().encodeToString(encryptedValue)
+    }
+
+    fun decrypt(value: String = vv, password: String = key): String {
+        val secretKeySpec = SecretKeySpec(password.toByteArray(), "BLOWFISH")
+        val iv = ByteArray(8)
+        val charArray = password.toCharArray()
+        for (i in charArray.indices){
+            iv[i] = charArray[i].toByte()
+        }
+        val ivParameterSpec = IvParameterSpec(iv)
+        val cipher = Cipher.getInstance("BLOWFISH/CBC/ISO10126Padding")
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec)
+        val decryptedByteValue = cipher.doFinal(Base64.getDecoder().decode(value))
+        return String(decryptedByteValue)
+    }
+}
+class DESForText(value: String, secret: String){ //DES/CBC/ISO10126Padding
+    var key = secret
+    var vv = value
+    init {
+        if (key.length < 8){
+            do {
+                key += (Math.random() * 10).toInt()
+            }while (key.length != 8)
+        }
+        else if(key.length > 8){
+            key = key.substring(0, 8).replace(".", "1")
+        }
+    }
+    fun encrypt(value: String = vv, password: String = key): String {
+        val secretKeySpec = SecretKeySpec(password.toByteArray(), "DES")
+        val iv = ByteArray(8)
+        val charArray = password.toCharArray()
+        for (i in charArray.indices){
+            iv[i] = charArray[i].toByte()
+        }
+        val ivParameterSpec = IvParameterSpec(iv)
+        val cipher = Cipher.getInstance("DES/CBC/ISO10126Padding")
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec)
+        val encryptedValue = cipher.doFinal(value.toByteArray())
+        return Base64.getEncoder().encodeToString(encryptedValue)
+    }
+
+    fun decrypt(value: String = vv, password: String = key): String {
+        val secretKeySpec = SecretKeySpec(password.toByteArray(), "DES")
+        val iv = ByteArray(8)
+        val charArray = password.toCharArray()
+        for (i in charArray.indices){
+            iv[i] = charArray[i].toByte()
+        }
+        val ivParameterSpec = IvParameterSpec(iv)
+        val cipher = Cipher.getInstance("DES/CBC/ISO10126Padding")
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec)
+        val decryptedByteValue = cipher.doFinal(Base64.getDecoder().decode(value))
+        return String(decryptedByteValue)
+    }
+}
+class AnotherForText(value: String, secret: String, method: String, length: Int = 16){
+    var key = secret
+    var vv = value
+    val m = method
+    val le = length
+    init {
+        if (key.length < length){
+            do {
+                key += (Math.random() * 10).toInt()
+            }while (key.length != length)
+        }
+        else if(key.length > length){
+            key = key.substring(0, length).replace(".", "1")
+        }
+    }
+    fun encrypt(value: String = vv, password: String = key): String {
+        return try {
+            val secretKeySpec = SecretKeySpec(password.toByteArray(), m.substringBefore("/"))
+            val iv = ByteArray(le)
+            val charArray = password.toCharArray()
+            for (i in charArray.indices){
+                iv[i] = charArray[i].toByte()
+            }
+            val ivParameterSpec = IvParameterSpec(iv)
+            val cipher = Cipher.getInstance(m)
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec)
+            val encryptedValue = cipher.doFinal(value.toByteArray())
+            Base64.getEncoder().encodeToString(encryptedValue)
+        }catch (e: Exception){
+            e.toString()
+        }
+    }
+    fun decrypt(value: String = vv, password: String = key): String {
+        return try {
+            val secretKeySpec = SecretKeySpec(password.toByteArray(), m.substringBefore("/"))
+            val iv = ByteArray(le)
+            val charArray = password.toCharArray()
+            for (i in charArray.indices){
+                iv[i] = charArray[i].toByte()
+            }
+            val ivParameterSpec = IvParameterSpec(iv)
+            val cipher = Cipher.getInstance(m)
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec)
+            val decryptedByteValue = cipher.doFinal(Base64.getDecoder().decode(value))
+            String(decryptedByteValue)
+        }catch (e: Exception){
+            e.toString()
+        }
+    }
+}

@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="user">#50c878</color>
     <color name="user2">#a0c850</color>
+    <color name="OK">#a1caf1</color>
+    <color name="Cancel">#f1a1a2</color>
 </resources>

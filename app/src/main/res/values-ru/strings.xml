@@ -16,6 +16,10 @@
         <item>AES/GCM/NoPadding</item>
         <item>CIPHER-1</item>
         <item>CIPHER-2</item>
+        <item>Base64</item>
+        <item>BLOWFISH/CBC/ISO10126Padding</item>
+        <item>DES/CBC/ISO10126Padding</item>
+        <item>Ваш поставщик</item>
     </string-array>
     <string-array name="choice_type_image">
         <item>AES/CBC/PKCS5Padding</item>
@@ -76,4 +80,9 @@
     <string name="create">Создать как копию</string>
     <string name="select">Выбрать</string>
     <string name="error_folder">Возникла ошибка! Проверьте наличие папки "/Download" на вашем устройстве</string>
+    <string name="method_vendor">Введите метод здесь</string>
+    <string name="length_vendor">Введите длину ключа здесь</string>
+    <string name="fill">Заполните поля</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="cancel">Отмена</string>
 </resources>

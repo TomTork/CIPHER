@@ -26,9 +26,11 @@ class Data {
     private val number = File(d("number"))
     private val user = File(d("user"))
     private val key_folder = File(d("keyfolder"))
+    private val method_vendor = File(d("methodvendor"))
+    private val length_vendor = File(d("lengthvendor"))
     init {
         try{
-            if (!height.exists() || !key_text.exists() || !len_password.exists() || !number.exists() || !user.exists() || !key_folder.exists()){
+            if (!height.exists() || !key_text.exists() || !len_password.exists() || !number.exists() || !user.exists() || !key_folder.exists() || !method_vendor.exists()){
                 width.createNewFile()
                 height.createNewFile()
                 value.createNewFile()
@@ -46,6 +48,8 @@ class Data {
                 len_password.createNewFile()
                 user.createNewFile()
                 key_folder.createNewFile()
+                method_vendor.createNewFile()
+                length_vendor.createNewFile()
 
                 setNumber(10)
                 setLength(16)
@@ -74,6 +78,8 @@ class Data {
             len_password.createNewFile()
             user.createNewFile()
             key_folder.createNewFile()
+            method_vendor.createNewFile()
+            length_vendor.createNewFile()
 
             setNumber(10)
             setLength(16)
@@ -84,6 +90,18 @@ class Data {
             setWidth(0)
             setUser(0)
         }
+    }
+    fun getLengthVendor(): Int{
+        return FileInputStream(length_vendor).bufferedReader().use { it.readText() }.toString().toInt()
+    }
+    fun setLengthVendor(value: Int){
+        length_vendor.writeText(value.toString())
+    }
+    fun getMethodVendor(): String{
+        return FileInputStream(method_vendor).bufferedReader().use { it.readText() }.toString()
+    }
+    fun setMethodVendor(value: String){
+        method_vendor.writeText(value)
     }
     fun setKeyFolder(value: String){
         key_folder.writeText(value)

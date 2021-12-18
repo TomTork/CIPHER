@@ -1,9 +1,20 @@
 package com.anotherworld.encryption
 
+import android.app.Dialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.res.Resources
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatSpinner
 
 class Settings : AppCompatActivity() {
@@ -64,6 +75,39 @@ class Settings : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         id()
         getData()
+        type_text.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if(p2 == 7){
+                    val view: View = layoutInflater.inflate(R.layout.dialog_for_vendor, null)
+                    val alertDialog: AlertDialog = AlertDialog.Builder(this@Settings).create()
+                    alertDialog.setTitle(R.string.fill)
+                    alertDialog.setIcon(R.mipmap.ic_launcher)
+                    alertDialog.setCancelable(false)
+                    val method: EditText = view.findViewById(R.id.vendor_method)
+                    val length: EditText = view.findViewById(R.id.vendor_length)
+                    method.setText(data.getMethodVendor())
+                    length.setText(data.getLengthVendor().toString())
+                    alertDialog.setButton(Dialog.BUTTON_POSITIVE, resources.getText(R.string.confirm), DialogInterface.OnClickListener {
+                            dialog, which ->
+                        data.setMethodVendor(method.text.toString())
+                        data.setLengthVendor(length.text.toString().toInt())
+                        alertDialog.hide()
+                    })
+                    alertDialog.setButton(Dialog.BUTTON_NEGATIVE, resources.getText(R.string.cancel), DialogInterface.OnClickListener {
+                            dialog, which -> alertDialog.hide()
+                    })
+                    alertDialog.setView(view)
+                    alertDialog.setOnShowListener {
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.OK))
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(resources.getColor(R.color.Cancel))
+                    }
+                    alertDialog.show()
+                }
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //TODO
+            }
+        }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {

@@ -15,6 +15,10 @@
         <item>AES/GCM/NoPadding</item>
         <item>CIPHER-1</item>
         <item>CIPHER-2</item>
+        <item>Base64</item>
+        <item>BLOWFISH/CBC/ISO10126Padding</item>
+        <item>DES/CBC/ISO10126Padding</item>
+        <item>Your vendor</item>
     </string-array>
     <string-array name="choice_type_image">
         <item>AES/CBC/PKCS5Padding</item>
@@ -75,4 +79,9 @@
     <string name="create">Create as copy</string>
     <string name="select">Select</string>
     <string name="error_folder">An error has occurred! Check for a "/Download" folder on your device</string>
+    <string name="method_vendor">Enter method here</string>
+    <string name="length_vendor">Enter key length here</string>
+    <string name="fill">Fill in the fields</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>
