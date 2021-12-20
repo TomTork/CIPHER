@@ -28,9 +28,12 @@ class Data {
     private val key_folder = File(d("keyfolder"))
     private val method_vendor = File(d("methodvendor"))
     private val length_vendor = File(d("lengthvendor"))
+    private val method_vendor_image = File(d("methodvendorimage"))
+    private val length_vendor_image = File(d("lengthvendorimage"))
     init {
         try{
-            if (!height.exists() || !key_text.exists() || !len_password.exists() || !number.exists() || !user.exists() || !key_folder.exists() || !method_vendor.exists()){
+            if (!height.exists() || !key_text.exists() || !len_password.exists() || !number.exists() || !user.exists() || !key_folder.exists() || !method_vendor.exists()
+                || !method_vendor_image.exists()){
                 width.createNewFile()
                 height.createNewFile()
                 value.createNewFile()
@@ -50,6 +53,8 @@ class Data {
                 key_folder.createNewFile()
                 method_vendor.createNewFile()
                 length_vendor.createNewFile()
+                method_vendor_image.createNewFile()
+                length_vendor_image.createNewFile()
 
                 setNumber(10)
                 setLength(16)
@@ -80,6 +85,8 @@ class Data {
             key_folder.createNewFile()
             method_vendor.createNewFile()
             length_vendor.createNewFile()
+            method_vendor_image.createNewFile()
+            length_vendor_image.createNewFile()
 
             setNumber(10)
             setLength(16)
@@ -90,6 +97,20 @@ class Data {
             setWidth(0)
             setUser(0)
         }
+    }
+    fun getMethodImageVendor(): String{
+        return FileInputStream(method_vendor_image).bufferedReader().use { it.readText() }.toString()
+    }
+    fun setMethodImageVendor(value: String){
+        method_vendor_image.writeText(value)
+    }
+    fun setLengthImageVendor(i: Int){
+        length_vendor_image.writeText(i.toString())
+    }
+    fun getLengthImageVendor(): Int{
+        return try{
+            FileInputStream(length_vendor_image).bufferedReader().use { it.readText() }.toString().toInt()
+        }catch (e: Exception){ 0 }
     }
     fun getLengthVendor(): Int{
         return FileInputStream(length_vendor).bufferedReader().use { it.readText() }.toString().toInt()

@@ -64,6 +64,14 @@ class ImageFragment : Fragment() {
                 val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
                 bmp
             }
+            3 -> {
+                val arrSTR: String = AnotherForImage(data.getLengthImageVendor(), byteArrayOf(), name, data.getMethodImageVendor(), content).decrypt()
+                val lstr = arrSTR.split(",")
+                val mas1: Array<Int> = lstr.map { it.toInt() }.toTypedArray()
+                val b: ByteArray = mas1.foldIndexed(ByteArray(mas1.size)) { i, a, v -> a.apply { set(i, v.toByte()) } }
+                val bmp: Bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
+                bmp
+            }
             else -> {
                 val arrSTR: String = GMSFORIMAGE(byteArrayOf(), name, content).decrypt()
                 val lstr = arrSTR.split(",")
@@ -127,6 +135,20 @@ class ImageFragment : Fragment() {
                                         if (cIMAGE.encrypt(byteArray))decode.setText(Data().getValue())
                                         else Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
                                         Data().setKeyImage("CIPHER-IMAGE" + Math.random().toString().replace(".", (Math.random() * 10).toInt().toString()).substring(0, 16))
+                                    }
+                                    3 -> {
+                                        try{
+                                            val a = AnotherForImage(Data().getLengthImageVendor(), byteArray, secret, Data().getMethodImageVendor())
+                                            code.setText(a.key)
+                                            if(a.encrypt()){
+                                                decode.setText(Data().getValue())
+                                            }
+                                            else Toast.makeText(context, R.string.ops, Toast.LENGTH_SHORT).show()
+                                            code.setText(a.key)
+                                            Data().setKeyImage(a.key)
+                                        }catch (e: Exception){
+                                            decode.setText(e.toString())
+                                        }
                                     }
                                 }
                             }catch (e: Exception){

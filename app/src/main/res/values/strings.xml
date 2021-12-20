@@ -24,6 +24,7 @@
         <item>AES/CBC/PKCS5Padding</item>
         <item>AES/GCM/NoPadding</item>
         <item>CIPHER-IMAGE</item>
+        <item>My vendor</item>
     </string-array>
     <string-array name="folder_type">
         <item>AES/CBC/PKCS5Padding</item>

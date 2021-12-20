@@ -100,7 +100,7 @@ class Settings : AppCompatActivity() {
                     val alertDialog: AlertDialog = AlertDialog.Builder(this@Settings).create()
                     alertDialog.setTitle(R.string.fill)
                     alertDialog.setIcon(R.mipmap.ic_launcher)
-                    alertDialog.setCancelable(false)
+                    alertDialog.setCancelable(true)
                     val method: EditText = view.findViewById(R.id.vendor_method)
                     val length: EditText = view.findViewById(R.id.vendor_length)
                     method.setText(data.getMethodVendor())
@@ -109,6 +109,39 @@ class Settings : AppCompatActivity() {
                             dialog, which ->
                         data.setMethodVendor(method.text.toString())
                         data.setLengthVendor(length.text.toString().toInt())
+                        alertDialog.hide()
+                    })
+                    alertDialog.setButton(Dialog.BUTTON_NEGATIVE, resources.getText(R.string.cancel), DialogInterface.OnClickListener {
+                            dialog, which -> alertDialog.hide()
+                    })
+                    alertDialog.setView(view)
+                    alertDialog.setOnShowListener {
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.OK))
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(resources.getColor(R.color.Cancel))
+                    }
+                    alertDialog.show()
+                }
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //TODO
+            }
+        }
+        type_image.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if(p2 == 3){
+                    val view: View = layoutInflater.inflate(R.layout.dialog_for_vendor, null)
+                    val alertDialog: AlertDialog = AlertDialog.Builder(this@Settings).create()
+                    alertDialog.setTitle(R.string.fill)
+                    alertDialog.setIcon(R.mipmap.ic_launcher)
+                    alertDialog.setCancelable(true)
+                    val method: EditText = view.findViewById(R.id.vendor_method)
+                    val length: EditText = view.findViewById(R.id.vendor_length)
+                    method.setText(data.getMethodImageVendor())
+                    length.setText(data.getLengthImageVendor().toString())
+                    alertDialog.setButton(Dialog.BUTTON_POSITIVE, resources.getText(R.string.confirm), DialogInterface.OnClickListener {
+                            dialog, which ->
+                        data.setMethodImageVendor(method.text.toString())
+                        data.setLengthImageVendor(length.text.toString().toInt())
                         alertDialog.hide()
                     })
                     alertDialog.setButton(Dialog.BUTTON_NEGATIVE, resources.getText(R.string.cancel), DialogInterface.OnClickListener {

@@ -520,3 +520,42 @@ class AnotherForText(value: String, secret: String, method: String, length: Int 
         }
     }
 }
+class AnotherForImage(length: Int, s: ByteArray, secret: String, method: String, encr: String = ""){
+    var enc = s.toList().toString().replace("[", "").replace("]", "").replace(" ", "")
+    var key = secret
+    var m = method
+    var encry = encr
+    val le = length
+    init {
+        if (key.length < length){
+            do {
+                key += (Math.random() * 10).toInt()
+            }while (key.length != length)
+        }
+        else if(key.length > length){
+            key = key.substring(0, length).replace(".", "1")
+        }
+    }
+    fun encrypt(secret: String = key, data: String = enc, method: String = m): Boolean {
+        val decodedKey = Base64.getDecoder().decode(secret)
+        val cipher = Cipher.getInstance(method)
+        val originalKey: SecretKey = SecretKeySpec(Arrays.copyOf(decodedKey, le), method.substringBefore("/"))
+        cipher.init(Cipher.ENCRYPT_MODE, originalKey, IvParameterSpec(ByteArray(le)))
+        val cipherText = cipher.doFinal(data.toByteArray(charset("UTF-8")))
+        Data().setValue(Base64.getEncoder().encodeToString(cipherText))
+        if(Data().getValue().isNotEmpty()) return true
+        return false
+    }
+    fun decrypt(secret: String = key, encryptedString: String = encry, method: String = m): String {
+        val decodedKey = Base64.getDecoder().decode(secret)
+        return try {
+            val cipher = Cipher.getInstance(method)
+            val originalKey: SecretKey = SecretKeySpec(Arrays.copyOf(decodedKey, le), method.substringBefore("/"))
+            cipher.init(Cipher.DECRYPT_MODE, originalKey, IvParameterSpec(ByteArray(le)))
+            val cipherText = cipher.doFinal(Base64.getDecoder().decode(encryptedString))
+            String(cipherText)
+        } catch (e: java.lang.Exception) {
+            throw RuntimeException("Error occured while decrypting data", e)
+        }
+    }
+}
