@@ -19,7 +19,7 @@
         <item>Base64</item>
         <item>BLOWFISH/CBC/ISO10126Padding</item>
         <item>DES/CBC/ISO10126Padding</item>
-        <item>Ваш поставщик</item>
+        <item>Мой поставщик</item>
     </string-array>
     <string-array name="choice_type_image">
         <item>AES/CBC/PKCS5Padding</item>
@@ -85,4 +85,8 @@
     <string name="fill">Заполните поля</string>
     <string name="confirm">Подтвердить</string>
     <string name="cancel">Отмена</string>
+    <string name="tested">Просмотр проверенных методов шифрования</string>
+    <string name="method1">Длина ввода должна быть кратна 16 байтам</string>
+    <string name="method2">Длина текста от 16 символов!</string>
+    <string name="method3">Длина текста должна быть кратной 8</string>
 </resources>

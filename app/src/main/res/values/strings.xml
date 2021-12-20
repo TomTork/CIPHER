@@ -18,7 +18,7 @@
         <item>Base64</item>
         <item>BLOWFISH/CBC/ISO10126Padding</item>
         <item>DES/CBC/ISO10126Padding</item>
-        <item>Your vendor</item>
+        <item>My vendor</item>
     </string-array>
     <string-array name="choice_type_image">
         <item>AES/CBC/PKCS5Padding</item>
@@ -84,4 +84,8 @@
     <string name="fill">Fill in the fields</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="tested">View tested encryption methods</string>
+    <string name="method1">Input length must be a multiple of 16 bytes</string>
+    <string name="method2">Text length from 16 characters!</string>
+    <string name="method3">The length of the text must be divisible by 8</string>
 </resources>
