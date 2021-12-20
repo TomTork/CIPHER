@@ -182,10 +182,10 @@ class Data {
         return FileInputStream(second).bufferedReader().use { it.readText() }.toString()
     }
     fun setSecond(value: String){
-        second.writeText(value.toString())
+        second.writeText(value)
     }
     fun setFirst(value: String){
-        first.writeText(value.toString())
+        first.writeText(value)
     }
     fun getFirst(): String{
         return FileInputStream(first).bufferedReader().use { it.readText() }.toString()

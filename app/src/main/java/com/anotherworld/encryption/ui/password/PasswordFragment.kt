@@ -19,6 +19,8 @@ import com.anotherworld.encryption.databinding.FragmentPasswordBinding
 
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
 
 class PasswordFragment : Fragment() {
 
