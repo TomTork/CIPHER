@@ -126,24 +126,6 @@ class TextFragment : Fragment() {
                         }
                         5 -> {
                             try{
-                                val blow = BLOWFISHForText(input.text.toString(), code.text.toString())
-                                code.setText(blow.key)
-                                translate.setText(blow.encrypt())
-                            }catch (e: Exception){
-                                Snackbar.make(it, R.string.ops, Snackbar.LENGTH_SHORT).show()
-                            }
-                        }
-                        6 -> {
-                            try{
-                                val d = DESForText(input.text.toString(), code.text.toString())
-                                code.setText(d.key)
-                                translate.setText(d.encrypt())
-                            }catch (e: Exception){
-                                Snackbar.make(it, R.string.ops, Snackbar.LENGTH_SHORT).show()
-                            }
-                        }
-                        7 -> {
-                            try{
                                 val a = AnotherForText(input.text.toString(), code.text.toString(), Data().getMethodVendor(), Data().getLengthVendor())
                                 code.setText(a.key)
                                 translate.setText(a.encrypt())
@@ -198,24 +180,6 @@ class TextFragment : Fragment() {
                             }
                         }
                         5 -> {
-                            try{
-                                val blow = BLOWFISHForText(input.text.toString(), code.text.toString())
-                                code.setText(blow.key)
-                                translate.setText(blow.decrypt())
-                            }catch (e: Exception){
-                                Snackbar.make(it, R.string.ops, Snackbar.LENGTH_SHORT).show()
-                            }
-                        }
-                        6 -> {
-                            try{
-                                val d = DESForText(input.text.toString(), code.text.toString())
-                                code.setText(d.key)
-                                translate.setText(d.decrypt())
-                            }catch (e: Exception){
-                                Snackbar.make(it, R.string.ops, Snackbar.LENGTH_SHORT).show()
-                            }
-                        }
-                        7 -> {
                             try{
                                 val a = AnotherForText(input.text.toString(), code.text.toString(), Data().getMethodVendor(), Data().getLengthVendor())
                                 code.setText(a.key)

@@ -60,6 +60,7 @@ class ScaleFragment : Fragment() {
                         val b = BigInteger(BigInteger(inputNumbers.text.toString(), system.text.toString().toInt()).toString(system2.text.toString().toInt()))
                         outputNumbers.text = b.toString()
                     }catch (e: Exception){
+                        outputNumbers.text = "ERROR"
                         Snackbar.make(it, R.string.ops, Snackbar.LENGTH_SHORT).show()
                     }
                 }

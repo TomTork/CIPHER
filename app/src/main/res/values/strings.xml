@@ -16,8 +16,6 @@
         <item>CIPHER-1</item>
         <item>CIPHER-2</item>
         <item>Base64</item>
-        <item>BLOWFISH/CBC/ISO10126Padding</item>
-        <item>DES/CBC/ISO10126Padding</item>
         <item>My vendor</item>
     </string-array>
     <string-array name="choice_type_image">
