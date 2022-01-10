@@ -95,7 +95,7 @@ class Settings : AppCompatActivity() {
             resources.getString(R.string.method3), "-", "-", "-", "-", "-", "-", "-")
         type_text.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if(p2 == 7){
+                if(p2 == 5){
                     val view: View = layoutInflater.inflate(R.layout.dialog_for_vendor, null)
                     val alertDialog: AlertDialog = AlertDialog.Builder(this@Settings).create()
                     alertDialog.setTitle(R.string.fill)
