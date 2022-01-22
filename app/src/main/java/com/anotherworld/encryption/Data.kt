@@ -113,7 +113,9 @@ class Data {
         }catch (e: Exception){ 0 }
     }
     fun getLengthVendor(): Int{
-        return FileInputStream(length_vendor).bufferedReader().use { it.readText() }.toString().toInt()
+        return try{
+            FileInputStream(length_vendor).bufferedReader().use { it.readText() }.toString().toInt()
+        }catch (e: Exception){ 0 }
     }
     fun setLengthVendor(value: Int){
         length_vendor.writeText(value.toString())
