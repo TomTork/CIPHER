@@ -98,7 +98,7 @@ class Settings : AppCompatActivity() {
                 if(p2 == 5){
                     val view: View = layoutInflater.inflate(R.layout.dialog_for_vendor, null)
                     val alertDialog: AlertDialog = AlertDialog.Builder(this@Settings).create()
-                    alertDialog.setTitle(R.string.fill)
+                    alertDialog.setTitle(R.string.fill_text)
                     alertDialog.setIcon(R.mipmap.ic_launcher)
                     alertDialog.setCancelable(true)
                     val method: EditText = view.findViewById(R.id.vendor_method)
@@ -131,7 +131,7 @@ class Settings : AppCompatActivity() {
                 if(p2 == 3){
                     val view: View = layoutInflater.inflate(R.layout.dialog_for_vendor, null)
                     val alertDialog: AlertDialog = AlertDialog.Builder(this@Settings).create()
-                    alertDialog.setTitle(R.string.fill)
+                    alertDialog.setTitle(R.string.fill_image)
                     alertDialog.setIcon(R.mipmap.ic_launcher)
                     alertDialog.setCancelable(true)
                     val method: EditText = view.findViewById(R.id.vendor_method)

@@ -81,7 +81,8 @@
     <string name="error_folder">Возникла ошибка! Проверьте наличие папки "/Download" на вашем устройстве</string>
     <string name="method_vendor">Введите метод здесь</string>
     <string name="length_vendor">Введите длину ключа здесь</string>
-    <string name="fill">Заполните поля</string>
+    <string name="fill_text">Заполните поля для шифрования текста</string>
+    <string name="fill_image">Заполните поля для шифрования изображений</string>
     <string name="confirm">Подтвердить</string>
     <string name="cancel">Отмена</string>
     <string name="tested">Просмотр проверенных методов шифрования</string>

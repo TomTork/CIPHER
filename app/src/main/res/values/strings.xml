@@ -80,7 +80,8 @@
     <string name="error_folder">An error has occurred! Check for a "/Download" folder on your device</string>
     <string name="method_vendor">Enter method here</string>
     <string name="length_vendor">Enter key length here</string>
-    <string name="fill">Fill in the fields</string>
+    <string name="fill_text">Fill in the fields for text encryption</string>
+    <string name="fill_image">Fill in the fields for image encryption</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="tested">View tested encryption methods</string>
