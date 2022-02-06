@@ -25,6 +25,7 @@ import net.lingala.zip4j.model.enums.EncryptionMethod
 
 import net.lingala.zip4j.model.ZipParameters
 import kotlin.Exception
+import kotlinx.android.synthetic.main.fragment_directory.*
 
 
 class DirectoryFragment : Fragment() {

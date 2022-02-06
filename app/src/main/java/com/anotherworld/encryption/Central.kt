@@ -20,6 +20,7 @@ import androidx.core.view.get
 import com.anotherworld.encryption.databinding.ActivityCentralBinding
 import java.util.*
 import android.os.Build
+import com.google.android.material.snackbar.Snackbar
 
 class Central : AppCompatActivity() {
     private val PERMISSION_REQUEST_CODE = 123
@@ -39,6 +40,7 @@ class Central : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_text, R.id.nav_image, R.id.nav_password, R.id.nav_directory, R.id.nav_scale, R.id.nav_chat), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
