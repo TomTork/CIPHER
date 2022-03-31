@@ -290,17 +290,16 @@ fun count(str: String, target: String): Int {
     if(target.isNotEmpty()) return (str.length - str.replace(target, "").length) / target.length
     return -1
 }
-class CIPHER2{ //Z = 0 Y = " "
+class CIPHER2{ //Z = 0 & = " "
     fun encrypt(valueBase: String, secret: String): String{
         val key = secret.hashCode().toString().substringAfter("-")
         var f = 0
         var answer = ""
-        val kk = valueBase.replace(" ", "Y")
+        val kk = valueBase.replace(" ", "&")
         val array = kk.toCharArray().map { String.format("%a", it.code.toFloat()).substringAfter(".") + randomUPPER() }
         var value = array.toList().toString().filterNot { "[], ".indexOf(it) > -1 }.replace("0", "Z")
         if (value[0].toString() == "0")value = value.replaceFirst("0", "1")
         var onlyText = value.filterNot { "0123456789".indexOf(it) > -1 }
-        println(value)
         for (i in onlyText.indices){
             if (value.substringBefore(onlyText[0].toString()).isNotEmpty()){
                 answer += value.substringBefore(onlyText[0].toString()).toInt() shl key[f].toString().toInt()
@@ -357,7 +356,7 @@ class CIPHER2{ //Z = 0 Y = " "
         for (i in arr.indices){
             final.add(arr[i].toFloat().toInt().toChar().toString())
         }
-        return final.toList().toString().filterNot { "[], ".indexOf(it) > -1 }.replace("Y", " ")
+        return final.toList().toString().filterNot { "[], ".indexOf(it) > -1 }.replace("&", " ")
     }
     private fun randomUPPER(): String{
         val random = Random()
