@@ -1,5 +1,13 @@
+@file:OptIn(ExperimentalStdlibApi::class)
+
 package com.anotherworld.encryption
 
+import java.util.Base64
+import java.util.Collections
+import kotlin.experimental.and
+import kotlin.experimental.inv
+import kotlin.experimental.or
+import kotlin.experimental.xor
 import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -474,5 +482,65 @@ class AnotherForImage(length: Int, s: ByteArray, secret: String, method: String,
         } catch (e: java.lang.Exception) {
             throw RuntimeException("Error occured while decrypting data", e)
         }
+    }
+}
+class Cipher3{
+    fun encrypt(value: String, key: String): String{
+        var keyArray = key.toByteArray(charset("UTF-8"))
+        var valueArray = value.toByteArray(charset("UTF-8"))
+        for (t in 0 until 16){
+            for (i in valueArray.indices){
+                valueArray[i] = valueArray[i] xor keyArray[i % keyArray.size]
+                valueArray[i] = valueArray[i].plus(keyArray[i % keyArray.size]).toByte()
+                valueArray[i] = valueArray[i].rotateLeft(keyArray[i % keyArray.size].toInt())
+                valueArray[i] = valueArray[i].inc()
+            }
+            val listValueArray = valueArray.copyOf().toList()
+            Collections.rotate(listValueArray, keyArray.sum())
+            valueArray = listValueArray.toByteArray()
+
+            val listKeyArray = keyArray.copyOf().toList()
+            Collections.rotate(listKeyArray, keyArray.sum())
+            keyArray = listKeyArray.toByteArray()
+        }
+        var answer = ""
+        for (i in Base64.getEncoder().encode(valueArray).toList()){
+            answer += i.toInt().toChar()
+        }
+        return answer
+    }
+    fun decrypt(value: String, key: String): String{
+        var valueArray = Base64.getDecoder().decode(value)
+        var keyArray = key.toByteArray(charset("UTF-8"))
+        val sumKeyArray = keyArray.sum()
+        for (a in 0 until 16){
+            val listKeyArray = keyArray.copyOf().toList()
+            Collections.rotate(listKeyArray, keyArray.sum())
+            keyArray = listKeyArray.toByteArray()
+
+            val listValueArray = valueArray.copyOf().toList()
+            Collections.rotate(listValueArray, keyArray.sum())
+            valueArray = listValueArray.toByteArray()
+        }
+        for (t in 0 until 16){
+            val listKeyArray = keyArray.copyOf().toList()
+            Collections.rotate(listKeyArray, -keyArray.sum())
+            keyArray = listKeyArray.toByteArray()
+
+            val listValueArray = valueArray.copyOf().toList()
+            Collections.rotate(listValueArray, -keyArray.sum())
+            valueArray = listValueArray.toByteArray()
+            for (i in valueArray.indices){
+                valueArray[i] = valueArray[i].dec()
+                valueArray[i] = valueArray[i].rotateRight(keyArray[i % keyArray.size].toInt())
+                valueArray[i] = valueArray[i].minus(keyArray[i % keyArray.size]).toByte()
+                valueArray[i] = valueArray[i] xor keyArray[i % keyArray.size]
+            }
+        }
+        var answer = ""
+        for (i in valueArray.indices){
+            answer += valueArray[i].toInt().toChar()
+        }
+        return answer
     }
 }
