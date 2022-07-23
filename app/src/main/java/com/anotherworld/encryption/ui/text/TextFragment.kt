@@ -101,9 +101,8 @@ class TextFragment : Fragment() {
                         }
                         2 -> {
                             try{
-                                val cipher1 = CIPHER1()
-                                translate.setText(cipher1.encrypt("!${input.text.toString()}"))
-                                code.setText(cipher1.secret)
+                                val cipher1 = Cipher3()
+                                translate.setText(cipher1.encrypt(input.text.toString(), code.text.toString()))
                             }catch (e: Exception){
                                 Snackbar.make(it, R.string.ops, Snackbar.LENGTH_SHORT).show()
                             }
@@ -157,8 +156,8 @@ class TextFragment : Fragment() {
                         }
                         2 -> {
                             try{
-                                val cipher1 = CIPHER1()
-                                translate.setText(cipher1.decrypt(input.text.toString(), code.text.toString()).replaceFirst("!", ""))
+                                val cipher1 = Cipher3()
+                                translate.setText(cipher1.decrypt(input.text.toString(), code.text.toString()))
                             }catch (e: Exception){
                                 Snackbar.make(it, R.string.ops, Snackbar.LENGTH_SHORT).show()
                             }

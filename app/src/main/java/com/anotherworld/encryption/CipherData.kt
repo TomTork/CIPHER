@@ -209,95 +209,96 @@ class GMSFORIMAGE(byteArray: ByteArray, secret: String, enc: String = ""){
         return String(decryptedByteValue)
     }
 }
-class CIPHER1{
-    var secret = ""
-    fun encrypt(valueBase: String): String{
-        val array = valueBase.toCharArray().map { it.code }
-        val numbers = valueBase.toCharArray().map { it.code.toString().length }.toString().filterNot { "[], ".indexOf(it) > -1 }
-        secret += "$numbers|"
-        var value: String = array.toList().toString().filterNot { "[], ".indexOf(it) > -1 }
-        var num = 65
-        for(i in value.indices){
-            for(t in i until (value.length / 2)){
-                if(value.substring(i, t).isInt() && value.substring(i, t).length >= 2 && count(value, value.substring(i, t)) >= 2){
-                    if(num <= 90){
-                        secret += value.substring(i, t) + ";"
-                        value = value.replace(value.substring(i, t), num.toChar().toString())
-                        num++
-                    }
-                    else break
-                }
-            }
-        }
-        val mi = "|" + secret.substringAfter("|")
-        val se = secret.substringBefore("|")
-        var sec = se
-        var otv = ""
-        val set = IntArray(se.length){ se[it].toString().toInt() }.toSet().toList()
-        var nu = 0
-        for(i in set.indices){
-            for(t in 1 until se.length + 1){
-                if(sec.length >= t && sec.substring(0, t)[t - 1].toString().toInt() == set[i]){
-                    nu++
-                }
-                else{ break }
-            }
-            if(nu >= 3){
-                otv += set[i].toString() + "^$nu;"
-                sec = sec.replaceFirst(sec.substring(0, nu), "")
-                nu = 0
-            }
-            else nu = 0
-        }
-        secret = otv + sec + mi
-        Data().setValue(value)
-        return value
-    }
-    private fun String.isInt(): Boolean{
-        var temp = this
-        temp = temp.filterNot { "0123456789".indexOf(it) > -1 }
-        if (temp.isEmpty())return true
-        return false
-    }
-    fun decrypt(value: String, secret: String): String{
-        val num = secret.substringBefore("|")
-        var code = secret.substringAfter("|")
-        var numN = ""
-        if(num.contains("^")){
-            var time = num
-            for (i in 0 until count(num, "^")){
-                for(t in 0 until time.substringBefore(";").substringAfter("^").toInt()){
-                    numN += time.substringBefore("^")
-                }
-                time = time.replaceFirst(time.substringBefore(";"), "").replaceFirst(";", "")
-            }
-        }
-        val arr: ArrayList<String> = ArrayList()
-        var answer = value
-        for(o in 65..90){
-            arr.add(o.toChar().toString())
-        }
-        for (r in value.indices){
-            if(code.isNotEmpty()){
-                answer = answer.replace(arr[r], code.substringBefore(";"))
-                code = code.replaceFirst(code.substringBefore(";"), "").replaceFirst(";", "")
-            }
-            else break
-        }
-        if(numN == "")numN = num
-        val arrNum = numN.toCharArray().toList()
-        val array = ArrayList<Int>()
-        for (i in arrNum.indices){
-            array.add(answer.substring(0, arrNum[i].toString().toInt()).toInt())
-            answer = answer.replaceFirst(answer.substring(0, arrNum[i].toString().toInt()), "")
-        }
-        return array.joinToString { it.toChar().toString() }.replace(", ", "")
-    }
-}
-fun count(str: String, target: String): Int {
-    if(target.isNotEmpty()) return (str.length - str.replace(target, "").length) / target.length
-    return -1
-}
+//DEPRECATED
+//class CIPHER1{
+//    var secret = ""
+//    fun encrypt(valueBase: String): String{
+//        val array = valueBase.toCharArray().map { it.code }
+//        val numbers = valueBase.toCharArray().map { it.code.toString().length }.toString().filterNot { "[], ".indexOf(it) > -1 }
+//        secret += "$numbers|"
+//        var value: String = array.toList().toString().filterNot { "[], ".indexOf(it) > -1 }
+//        var num = 65
+//        for(i in value.indices){
+//            for(t in i until (value.length / 2)){
+//                if(value.substring(i, t).isInt() && value.substring(i, t).length >= 2 && count(value, value.substring(i, t)) >= 2){
+//                    if(num <= 90){
+//                        secret += value.substring(i, t) + ";"
+//                        value = value.replace(value.substring(i, t), num.toChar().toString())
+//                        num++
+//                    }
+//                    else break
+//                }
+//            }
+//        }
+//        val mi = "|" + secret.substringAfter("|")
+//        val se = secret.substringBefore("|")
+//        var sec = se
+//        var otv = ""
+//        val set = IntArray(se.length){ se[it].toString().toInt() }.toSet().toList()
+//        var nu = 0
+//        for(i in set.indices){
+//            for(t in 1 until se.length + 1){
+//                if(sec.length >= t && sec.substring(0, t)[t - 1].toString().toInt() == set[i]){
+//                    nu++
+//                }
+//                else{ break }
+//            }
+//            if(nu >= 3){
+//                otv += set[i].toString() + "^$nu;"
+//                sec = sec.replaceFirst(sec.substring(0, nu), "")
+//                nu = 0
+//            }
+//            else nu = 0
+//        }
+//        secret = otv + sec + mi
+//        Data().setValue(value)
+//        return value
+//    }
+//    private fun String.isInt(): Boolean{
+//        var temp = this
+//        temp = temp.filterNot { "0123456789".indexOf(it) > -1 }
+//        if (temp.isEmpty())return true
+//        return false
+//    }
+//    fun decrypt(value: String, secret: String): String{
+//        val num = secret.substringBefore("|")
+//        var code = secret.substringAfter("|")
+//        var numN = ""
+//        if(num.contains("^")){
+//            var time = num
+//            for (i in 0 until count(num, "^")){
+//                for(t in 0 until time.substringBefore(";").substringAfter("^").toInt()){
+//                    numN += time.substringBefore("^")
+//                }
+//                time = time.replaceFirst(time.substringBefore(";"), "").replaceFirst(";", "")
+//            }
+//        }
+//        val arr: ArrayList<String> = ArrayList()
+//        var answer = value
+//        for(o in 65..90){
+//            arr.add(o.toChar().toString())
+//        }
+//        for (r in value.indices){
+//            if(code.isNotEmpty()){
+//                answer = answer.replace(arr[r], code.substringBefore(";"))
+//                code = code.replaceFirst(code.substringBefore(";"), "").replaceFirst(";", "")
+//            }
+//            else break
+//        }
+//        if(numN == "")numN = num
+//        val arrNum = numN.toCharArray().toList()
+//        val array = ArrayList<Int>()
+//        for (i in arrNum.indices){
+//            array.add(answer.substring(0, arrNum[i].toString().toInt()).toInt())
+//            answer = answer.replaceFirst(answer.substring(0, arrNum[i].toString().toInt()), "")
+//        }
+//        return array.joinToString { it.toChar().toString() }.replace(", ", "")
+//    }
+//}
+//fun count(str: String, target: String): Int {
+//    if(target.isNotEmpty()) return (str.length - str.replace(target, "").length) / target.length
+//    return -1
+//}
 class CIPHER2{ //Z = 0 & = " "
     fun encrypt(valueBase: String, secret: String): String{
         val key = secret.hashCode().toString().substringAfter("-")

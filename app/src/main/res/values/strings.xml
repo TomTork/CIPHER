@@ -13,7 +13,7 @@
     <string-array name="choice_type_cipher">
         <item>AES/CBC/PKCS5Padding</item>
         <item>AES/GCM/NoPadding</item>
-        <item>CIPHER-1</item>
+        <item>CIPHER-3</item>
         <item>CIPHER-2</item>
         <item>Base64</item>
         <item>My vendor</item>
